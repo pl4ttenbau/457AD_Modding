@@ -13622,8 +13622,8 @@ What kind of recruits do you want?", "dplmc_constable_recruit_select",
   (call_script, "script_change_player_relation_with_troop", ":enemy_prisoner", 1),
 (try_end),
 (call_script, "script_change_player_honor", 1),
-(call_script, "script_update_troop_notes", ":enemy_prisoner"),
-(call_script, "script_update_troop_notes", ":own_prisoner"),
+#(call_script, "script_update_troop_notes", ":enemy_prisoner"),
+#(call_script, "script_update_troop_notes", ":own_prisoner"),
 ]],
 
 [anyone|plyr, "dplmc_companion_prisoner_exchange_confirm",
@@ -13644,7 +13644,7 @@ What kind of recruits do you want?", "dplmc_constable_recruit_select",
 (call_script, "script_change_player_relation_with_troop", ":enemy_prisoner", -9),
 (call_script, "script_troop_change_relation_with_troop", ":own_prisoner", ":enemy_prisoner", -3),
 (call_script, "script_change_player_honor", -4), #SB : raise this penalty
-(call_script, "script_update_troop_notes", ":own_prisoner"),
+#(call_script, "script_update_troop_notes", ":own_prisoner"),
 #SB : decrease in family relations
 (set_show_messages, 0),
 (try_for_range, ":affiliated", lords_begin, kingdom_ladies_end),
@@ -28640,8 +28640,8 @@ I will use this to make amends to those you have wronged, and I will let it be k
   #Lord's troops transfer to new fief if possible
 
   #Final tasks
-  (call_script, "script_update_troop_notes", "$g_talk_troop"),
-  (call_script, "script_update_troop_notes", "trp_player"),
+  #(call_script, "script_update_troop_notes", "$g_talk_troop"),
+  #(call_script, "script_update_troop_notes", "trp_player"),
   (party_clear, "p_temp_party"),
   (party_clear, "p_temp_party_2"),
  #Display mesage
@@ -38007,7 +38007,7 @@ I suppose there are plenty of bounty hunters around to get the job done...", "lo
       (display_message, "str_dplmc_has_been_set_free"),
       (call_script, "script_change_player_relation_with_troop", "$diplomacy_var", 3),
       (call_script, "script_change_player_honor", 1),
-      (call_script, "script_update_troop_notes", "$diplomacy_var"),
+      #(call_script, "script_update_troop_notes", "$diplomacy_var"),
    ]],
 
   [anyone|plyr,"dplmc_prison_guard_exchange_prisoner_confirm", [],

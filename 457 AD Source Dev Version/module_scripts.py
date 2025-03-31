@@ -3319,7 +3319,7 @@ scripts = [
   (try_end),
 
   (try_for_range, ":cur_troop", original_kingdom_heroes_begin, active_npcs_end),
-      (call_script, "script_update_troop_notes", ":cur_troop"),
+      #(call_script, "script_update_troop_notes", ":cur_troop"),
   (try_end),
 
   (try_for_range, ":cur_center", centers_begin, centers_end),
@@ -3337,7 +3337,7 @@ scripts = [
       (call_script, "script_update_center_notes", ":cur_center"),
   (try_end),
 
-  (call_script, "script_update_troop_notes", "trp_player"),
+  #(call_script, "script_update_troop_notes", "trp_player"),
 
   #Place kingdom ladies
   (try_for_range, ":troop_id", kingdom_ladies_begin, kingdom_ladies_end),
@@ -28475,7 +28475,7 @@ scripts = [
       (try_begin),
         (ge, ":old_town_lord", 0),
         (neq, ":faction_no", "fac_player_supporters_faction"),
-        (call_script, "script_update_troop_notes", ":old_town_lord"),
+        #(call_script, "script_update_troop_notes", ":old_town_lord"),
       (try_end),
 
       (try_for_range, ":other_center", centers_begin, centers_end),
@@ -29196,7 +29196,7 @@ scripts = [
  #   (try_end),
 	(try_begin),
 		(gt, ":lord_troop_id", -1),
-		(call_script, "script_update_troop_notes", ":lord_troop_id"),
+		#(call_script, "script_update_troop_notes", ":lord_troop_id"),
 	(try_end),
 
     (call_script, "script_update_center_notes", ":center_no"),
@@ -29208,7 +29208,7 @@ scripts = [
 
     (try_begin),
         (ge, ":old_lord_troop_id", 0),
-        (call_script, "script_update_troop_notes", ":old_lord_troop_id"),
+        #(call_script, "script_update_troop_notes", ":old_lord_troop_id"),
         (store_troop_faction, ":old_lord_troop_faction", ":old_lord_troop_id"),
         (call_script, "script_update_faction_notes", ":old_lord_troop_faction"),
     (try_end),
@@ -29585,20 +29585,9 @@ scripts = [
        (try_end),
 
     (try_end),
-
-#    (try_begin),
-#   (eq, 1, 0),
- #       (eq, ":lord_troop_id", "trp_player"),
- #       (neq, ":old_lord_troop_id", "trp_player"),
- #       (party_get_slot, ":center_relation", ":center_no", slot_center_player_relation),
- #       (is_between, ":center_relation", -4, 5),
- #       (call_script, "script_change_player_relation_with_center", ":center_no", 5),
- #       (gt, ":old_lord_troop_id", 0),
- #       (call_script, "script_change_player_relation_with_troop", ":old_lord_troop_id", -25),
- #   (try_end),
   (try_begin),
     (gt, ":lord_troop_id", -1),
-    (call_script, "script_update_troop_notes", ":lord_troop_id"),
+    #(call_script, "script_update_troop_notes", ":lord_troop_id"),
   (try_end),
 
     (call_script, "script_update_center_notes", ":center_no"),
@@ -29610,7 +29599,7 @@ scripts = [
 
     (try_begin),
         (ge, ":old_lord_troop_id", 0),
-        (call_script, "script_update_troop_notes", ":old_lord_troop_id"),
+        #(call_script, "script_update_troop_notes", ":old_lord_troop_id"),
         (store_troop_faction, ":old_lord_troop_faction", ":old_lord_troop_id"),
         (call_script, "script_update_faction_notes", ":old_lord_troop_faction"),
     (try_end),
@@ -31607,11 +31596,11 @@ scripts = [
       (party_set_slot, "$pout_party", slot_party_commander_party, -1), #we need this because 0 is player's party!
 
 	(try_begin), #madsci give player faction lords their icon depending on culture if available
-	(gt, "$g_king_start", 0),
-	(this_or_next|eq, ":troop_faction_no", "fac_player_faction"),
-	(eq, ":troop_faction_no", "fac_player_supporters_faction"),
-	(is_between, "$g_player_culture", npc_kingdoms_begin, npc_kingdoms_end),
-	(assign, ":troop_faction_no", "$g_player_culture"), #reset this after the icon has been decided
+	  (gt, "$g_king_start", 0),
+	  (this_or_next|eq, ":troop_faction_no", "fac_player_faction"),
+	  (eq, ":troop_faction_no", "fac_player_supporters_faction"),
+	  (is_between, "$g_player_culture", npc_kingdoms_begin, npc_kingdoms_end),
+	  (assign, ":troop_faction_no", "$g_player_culture"), #reset this after the icon has been decided
 	(try_end),
 
       #Setting the flag icon
@@ -31664,43 +31653,43 @@ scripts = [
           (party_set_icon, "$pout_party", "icon_roman_army_1"),
         (try_end),
       (else_try), #w germanic, n germanic
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_7"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_8"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_9"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_10"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_12"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_14"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_19"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_20"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_21"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_30"),
-      (eq, ":troop_faction_no", "fac_kingdom_29"),
-      (party_set_icon, "$pout_party", "icon_germanic_army_1"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_7"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_8"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_9"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_10"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_12"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_14"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_19"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_20"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_21"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_30"),
+        (eq, ":troop_faction_no", "fac_kingdom_29"),
+        (party_set_icon, "$pout_party", "icon_germanic_army_1"),
       (else_try), #e germanic, gothic
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_3"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_4"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_11"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_15"),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_17"),
-      (eq, ":troop_faction_no", "fac_kingdom_18"),
-      (party_set_icon, "$pout_party", "icon_germanic_army_2"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_3"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_4"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_11"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_15"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_17"),
+        (eq, ":troop_faction_no", "fac_kingdom_18"),
+        (party_set_icon, "$pout_party", "icon_germanic_army_2"),
       (else_try),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_31"),
-      (eq, ":troop_faction_no", "fac_kingdom_6"),
-      (party_set_icon, "$pout_party", "icon_sassanid_lord"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_31"),
+        (eq, ":troop_faction_no", "fac_kingdom_6"),
+        (party_set_icon, "$pout_party", "icon_sassanid_lord"),
       (else_try),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_16"), #caucasians
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_24"),
-      (eq, ":troop_faction_no", "fac_kingdom_28"),
-      (party_set_icon, "$pout_party", "icon_caucasian_army"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_16"), #caucasians
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_24"),
+        (eq, ":troop_faction_no", "fac_kingdom_28"),
+        (party_set_icon, "$pout_party", "icon_caucasian_army"),
       (else_try),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_25"), #african
-      (eq, ":troop_faction_no", "fac_kingdom_26"),
-      (party_set_icon, "$pout_party", "icon_african_army"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_25"), #african
+        (eq, ":troop_faction_no", "fac_kingdom_26"),
+        (party_set_icon, "$pout_party", "icon_african_army"),
       (else_try),
-      (this_or_next|eq, ":troop_faction_no", "fac_kingdom_23"),
-      (eq, ":troop_faction_no", "fac_kingdom_27"),
-      (party_set_icon, "$pout_party", "icon_steppe_lord"),
+        (this_or_next|eq, ":troop_faction_no", "fac_kingdom_23"),
+        (eq, ":troop_faction_no", "fac_kingdom_27"),
+        (party_set_icon, "$pout_party", "icon_steppe_lord"),
       (else_try), #generic party set up
       (party_set_icon, "$pout_party", "icon_regular_army"),
         (try_end),
@@ -35872,7 +35861,7 @@ scripts = [
           (display_message, "@You lose {reg12} renown.", message_negative),
         (try_end),
       (try_end),
-      (call_script, "script_update_troop_notes", ":troop_no"),
+      #(call_script, "script_update_troop_notes", ":troop_no"),
   ]),
 
 
@@ -35930,7 +35919,7 @@ scripts = [
             (assign, "$g_talk_troop_relation", ":new_effective_relation"),
             (call_script, "script_setup_talk_info"),
           (try_end),
-          (call_script, "script_update_troop_notes", ":troop_no"),
+          #(call_script, "script_update_troop_notes", ":troop_no"),
         (try_end),
       (try_end),
   ]),
@@ -46766,144 +46755,6 @@ scripts = [
      (add_faction_note_from_sreg, ":faction_no", 1, "@{s5} has a strength of {reg1} men in total.", 1),
      ]),
 
-
-  #script_update_troop_notes
-  # INPUT: troop_no
-  # OUTPUT: none
-  ("update_troop_notes",
-    [
-##      (store_script_param, ":troop_no", 1),
-##     (str_store_troop_name, s54, ":troop_no"),
-##     (try_begin),
-##       (eq, ":troop_no", "trp_player"),
-##       (this_or_next|eq, "$player_has_homage", 1),
-##		(eq, "$players_kingdom", "fac_player_supporters_faction"),
-##       (assign, ":troop_faction", "$players_kingdom"),
-##     (else_try),
-##       (store_troop_faction, ":troop_faction", ":troop_no"),
-##     (try_end),
-##
-##	 (str_clear, s49),
-##	 (try_begin),
-##		(is_between, ":troop_no", lords_begin, kingdom_ladies_end),
-##		(troop_get_slot, reg1, ":troop_no", slot_troop_age),
-##		(str_store_string, s49, "str__age_reg1_family_"),
-##
-##		(try_for_range, ":aristocrat", lords_begin, kingdom_ladies_end),
-##			(call_script, "script_troop_get_family_relation_to_troop", ":aristocrat", ":troop_no"),
-##			(gt, reg0, 0),
-##
-##			(try_begin),
-##				(neg|is_between, ":aristocrat", kingdom_ladies_begin, kingdom_ladies_end),
-##				(str_store_troop_name_link, s12, ":aristocrat"),
-##				(call_script, "script_troop_get_relation_with_troop", ":aristocrat", ":troop_no"),
-##				(str_store_string, s49, "str_s49_s12_s11_rel_reg0"),
-##			(else_try),
-##				(str_store_troop_name, s12, ":aristocrat"),
-##				(str_store_string, s49, "str_s49_s12_s11"),
-##			(try_end),
-##
-##		(try_end),
-##	 (try_end),
-##
-##     (try_begin),
-##       (neq, ":troop_no", "trp_player"),
-##       (neg|is_between, ":troop_faction", kingdoms_begin, kingdoms_end),
-##       (str_clear, s54),
-##       (add_troop_note_from_sreg, ":troop_no", 0, s54, 0),
-##       (add_troop_note_from_sreg, ":troop_no", 1, s54, 0),
-##       (add_troop_note_from_sreg, ":troop_no", 2, s54, 0),
-###     (else_try),
-###       (is_between, ":troop_no", kingdom_ladies_begin, kingdom_ladies_end),
-###       (str_clear, s54),
-###       (add_troop_note_from_sreg, ":troop_no", 0, s54, 0),
-###       (add_troop_note_from_sreg, ":troop_no", 1, s54, 0),
-###       (add_troop_note_from_sreg, ":troop_no", 2, s54, 0),
-##     (else_try),
-##       (is_between, ":troop_no", pretenders_begin, pretenders_end),
-##       (neg|troop_slot_eq, ":troop_no", slot_troop_occupation, slto_kingdom_hero),
-##       (neq, ":troop_no", "$supported_pretender"),
-##       (troop_get_slot, ":orig_faction", ":troop_no", slot_troop_original_faction),
-##       (try_begin),
-##         (faction_slot_eq, ":orig_faction", slot_faction_state, sfs_active),
-##         (faction_slot_eq, ":orig_faction", slot_faction_has_rebellion_chance, 1),
-##         (str_store_faction_name_link, s56, ":orig_faction"),
-##         (add_troop_note_from_sreg, ":troop_no", 0, "@{s54} is a claimant to the throne of {s56}.", 0),
-##         (add_troop_note_tableau_mesh, ":troop_no", "tableau_troop_note_mesh"),
-##       (else_try),
-##         (str_clear, s54),
-##         (add_troop_note_from_sreg, ":troop_no", 0, s54, 0),
-##         (add_troop_note_from_sreg, ":troop_no", 1, s54, 0),
-##         (add_troop_note_from_sreg, ":troop_no", 2, s54, 0),
-##       (try_end),
-##     (else_try),
-##       (faction_get_slot, ":faction_leader", ":troop_faction", slot_faction_leader),
-##       (str_store_troop_name_link, s55, ":faction_leader"),
-##       (str_store_faction_name_link, s56, ":troop_faction"),
-##       (assign, ":troop_is_player_faction", 0),
-##       (assign, ":troop_is_faction_leader", 0),
-##       (try_begin),
-##         (eq, ":troop_faction", "fac_player_faction"),
-##         (assign, ":troop_is_player_faction", 1),
-##       (else_try),
-##         (eq, ":faction_leader", ":troop_no"),
-##         (assign, ":troop_is_faction_leader", 1),
-##       (try_end),
-##       (assign, ":num_centers", 0),
-##       (str_store_string, s58, "@nowhere"),
-##       (try_for_range_backwards, ":cur_center", centers_begin, centers_end),
-##         (party_slot_eq, ":cur_center", slot_town_lord, ":troop_no"),
-##         (try_begin),
-##           (eq, ":num_centers", 0),
-##           (str_store_party_name_link, s58, ":cur_center"),
-##         (else_try),
-##           (eq, ":num_centers", 1),
-##           (str_store_party_name_link, s57, ":cur_center"),
-##           (str_store_string, s58, "@{s57} and {s58}"),
-##         (else_try),
-##           (str_store_party_name_link, s57, ":cur_center"),
-##           (str_store_string, s58, "@{!}{s57}, {s58}"),
-##         (try_end),
-##         (val_add, ":num_centers", 1),
-##       (try_end),
-##       (troop_get_type, reg3, ":troop_no"),
-##       (troop_get_slot, reg5, ":troop_no", slot_troop_renown),
-##       (str_clear, s59),
-##       (try_begin),
-###         (troop_get_slot, ":relation", ":troop_no", slot_troop_player_relation),
-##         (call_script, "script_troop_get_player_relation", ":troop_no"),
-##         (assign, ":relation", reg0),
-##         (store_add, ":normalized_relation", ":relation", 100),
-##         (val_add, ":normalized_relation", 5),
-##         (store_div, ":str_offset", ":normalized_relation", 10),
-##         (val_clamp, ":str_offset", 0, 20),
-##         (store_add, ":str_id", "str_relation_mnus_100_ns",  ":str_offset"),
-##         (neq, ":str_id", "str_relation_plus_0_ns"),
-##         (str_store_string, s60, "@{reg3?She:He}"),
-##         (str_store_string, s59, ":str_id"),
-##         (str_store_string, s59, "@{!}^{s59}"),
-##       (try_end),
-##
-##	#lord recruitment changes begin
-##	#This sends a bunch of political information to s47.
-##
-##
-##
-##
-##	    #refresh registers
-##        (assign, reg9, ":num_centers"),
-##        (troop_get_type, reg3, ":troop_no"),
-##        (troop_get_slot, reg5, ":troop_no", slot_troop_renown),
-##		(assign, reg4, ":troop_is_faction_leader"),
-##		(assign, reg6, ":troop_is_player_faction"),
-##
-##        (add_troop_note_from_sreg, ":troop_no", 0, "str_reg6reg4s54_is_the_ruler_of_s56_s54_is_a_vassal_of_s55_of_s56_renown_reg5_reg9reg3shehe_is_the_reg3ladylord_of_s58reg3shehe_has_no_fiefss59_s49", 0),
-##	#lord recruitment changes end
-##
-##        (add_troop_note_tableau_mesh, ":troop_no", "tableau_troop_note_mesh"),
-##     (try_end),
-     ]),
-
   #script_update_troop_location_notes
   # INPUT: troop_no
   # OUTPUT: none
@@ -47155,12 +47006,12 @@ scripts = [
   # OUTPUT: none
   ("update_all_notes",
     [
-      (call_script, "script_update_troop_notes", "trp_player"),
+      #(call_script, "script_update_troop_notes", "trp_player"),
       (try_for_range, ":troop_no", active_npcs_begin, active_npcs_end),
 	    (this_or_next|troop_slot_eq, ":troop_no", slot_troop_occupation, slto_kingdom_hero),
 	    (this_or_next|troop_slot_eq, ":troop_no", slot_troop_occupation, slto_kingdom_lady),
 			(troop_slot_eq, ":troop_no", slot_troop_occupation, slto_inactive_pretender),
-        (call_script, "script_update_troop_notes", ":troop_no"),
+        #(call_script, "script_update_troop_notes", ":troop_no"),
       (try_end),
       (try_for_range, ":center_no", centers_begin, centers_end),
         (call_script, "script_update_center_notes", ":center_no"),
@@ -80482,824 +80333,6 @@ Born at {s43}^Contact in {s44} of the {s45}.^\
       (overlay_set_text, "$g_presentation_obj_9", "str_html"),
     ]),
 
-#    #SB : update script moved here from triggers, so we can call from menu
-#    ("dplmc_version_checker",
-#    [
-#     (assign, ":save_reg0", reg0),
-#     (assign, ":save_reg1", reg1),
-#     ##diplomacy start+
-#     ##Add version checking, so the corrections are only applied once.
-#     ##This allows for more complicated things to be added here in the future
-#     #SB : coop troops added Dec. 2016, no SP change but troops need to be re-appended
-#     (troop_get_slot, ":diplomacy_version_code", "trp_dplmc_chamberlain", dplmc_slot_troop_affiliated), #I've arbitrarily picked "when I started tracking this" as 0
-#     (try_begin),
-#       (troop_is_hero, dplmc_prev_employee), #if the older savegame had diplomacy troops already (but were pushed down)
-#       (troop_get_slot, ":preversion_code", dplmc_prev_employee, dplmc_slot_troop_affiliated),
-#       (assign, reg0, ":diplomacy_version_code"),
-#       (assign, reg1, ":preversion_code"),
-#       (val_max, ":diplomacy_version_code", ":preversion_code"), #get the actual value from savegame
-#       # (store_mul, ":preversion_code", DPLMC_CURRENT_VERSION_CODE),
-#       # (troop_set_slot, dplmc_prev_employee, dplmc_slot_troop_affiliated, ":preversion_code"), #pre-set this to be copied over
-#       # (display_message, "@{reg0} vs {reg1}"),
-
-
-#       # #We need to fix all the slot values and troops in wrong parties (recruiters etc)
-#       # (assign, ":troop_no", dplmc_prev_employee),
-#       # (try_for_range, ":new_troop", dplmc_employees_begin, dplmc_employees_end),
-#         # (call_script, "script_dplmc_copy_inventory", ":troop_no", ":new_troop"), #move inv over, player might want to play around with treasury
-#         # (try_for_range, ":slot_no", 0, dplmc_slot_troop_affiliated + 1),
-#           # (troop_get_slot, ":old_value", ":troop_no", ":slot_no"),
-#           # (troop_set_slot, ":new_troop", ":slot_no", ":old_value"),
-#         # (try_end),
-#         # (val_add, ":troop_no", 1), #move up by 1
-#       # (try_end),
-#     (try_end),
-
-#     (store_mod, ":verification", ":diplomacy_version_code", 128),
-
-#     (try_begin),
-#       #Detect bad values
-#       (neq, ":diplomacy_version_code", 0),
-#       (neq, ":verification", 68),
-#       (assign, reg0, ":diplomacy_version_code"),
-#       (display_message, "@{!} A slot had an unexpected value: {reg0}.  This might be because you are using an incompatible troop list, or are using a non-native strange game.  This message will repeat daily."),
-#       (assign, ":diplomacy_version_code", -1),
-#     (else_try),
-#       (val_div, ":diplomacy_version_code", 128),
-#       #Update if necessary.
-#       (lt, ":diplomacy_version_code", DPLMC_CURRENT_VERSION_CODE),
-#       (try_begin), #SB : do not block
-#         (ge, "$cheat_mode", 1),
-#         (assign, reg0, ":diplomacy_version_code"),
-#         (assign, reg1, DPLMC_CURRENT_VERSION_CODE),
-#         (display_message, "@{!} DEBUG - Detected a new version of diplomacy: previous version was {reg0}, and current version is {reg1}.  Performing updates."),
-#       (try_end),
-#       (store_mul, ":version_code", DPLMC_CURRENT_VERSION_CODE, 128),
-#       (val_add, ":version_code", DPLMC_VERSION_LOW_7_BITS),
-#       (troop_set_slot, "trp_dplmc_chamberlain", dplmc_slot_troop_affiliated, ":version_code"),
-#     (try_end),
-
-#     (try_begin),
-#       (is_between, ":diplomacy_version_code", -1, 1),#-1 or 0
-#       #Native behavior follows
-#       ##diplomacy end+
-
-#       #this to correct string errors in games started in 1.104 or before
-#       (party_set_name, "p_steppe_bandit_spawn_point", "str_the_steppes"),
-#       (party_set_name, "p_taiga_bandit_spawn_point", "str_the_tundra"),
-#       (party_set_name, "p_forest_bandit_spawn_point", "str_the_forests"),
-#       (party_set_name, "p_mountain_bandit_spawn_point", "str_the_highlands"),
-#       (party_set_name, "p_sea_raider_spawn_point_1", "str_the_coast"),
-#       (party_set_name, "p_sea_raider_spawn_point_2", "str_the_coast"),
-#       (party_set_name, "p_desert_bandit_spawn_point", "str_the_deserts"),
-
-#       #this to correct inappropriate home strings - Katrin to Uxkhal, Matheld to Fearichen
-#       # (troop_set_slot, "trp_npc11", slot_troop_home, "p_town_7"),
-#       (troop_set_slot, "trp_npc8", slot_troop_home, "p_village_35"),
-
-#       (troop_set_slot, "trp_npc15", slot_troop_town_with_contacts, "p_town_20"), #durquba
-
-#       #this to correct linen production at villages of durquba
-#       (party_set_slot, "p_village_93", slot_center_linen_looms, 0), #mazigh
-#       (party_set_slot, "p_village_94", slot_center_linen_looms, 0), #sekhtem
-#       (party_set_slot, "p_village_95", slot_center_linen_looms, 0), #qalyut
-#       (party_set_slot, "p_village_96", slot_center_linen_looms, 0), #tilimsal
-#       (party_set_slot, "p_village_97", slot_center_linen_looms, 0), #shibal zumr
-#       (party_set_slot, "p_village_102", slot_center_linen_looms, 0), #tamnuh
-#       (party_set_slot, "p_village_109", slot_center_linen_looms, 0), #habba
-
-#       (party_set_slot, "p_village_67", slot_center_fishing_fleet, 0), #Tebandra
-#       (party_set_slot, "p_village_5", slot_center_fishing_fleet, 15), #Kulum
-
-#       ##diplomacy start+
-#       #End the changes in Native
-#     (try_end),
-
-#    #Behavior specific to a fresh Diplomacy version
-#     (try_begin),
-#       (ge, ":diplomacy_version_code", 0),#do not run this if the code is bad
-#       (lt, ":diplomacy_version_code", 1),
-
-#       #Add home centers for claimants (mods not using standard NPCs or map may wish to remove this)
-#       (troop_set_slot, "trp_kingdom_1_pretender", slot_troop_home, "p_town_15"),#Lady Isolle - Suno
-#       (troop_set_slot, "trp_kingdom_2_pretender", slot_troop_home, "p_town_11"),#Prince Valdym - Curaw
-#       (troop_set_slot, "trp_kingdom_3_pretender", slot_troop_home, "p_town_19"),#Dustum Khan - Narra
-#       (troop_set_slot, "trp_kingdom_4_pretender", slot_troop_home, "p_town_12"),#Lethwin Far-Seeker - Wercheg
-#       (troop_set_slot, "trp_kingdom_5_pretender", slot_troop_home, "p_town_3"),#Lord Kastor - Veluca
-#       (troop_set_slot, "trp_kingdom_6_pretender", slot_troop_home, "p_town_20"),#Arwa the Pearled One - Durquba
-#       #add ancestral fiefs to home slots (mods not using standard NPCs or map should remove this)
-#       #Also the primary six towns (mods not using standard NPCs or map may wish to remove this)
-#     (troop_set_slot, "trp_kingdom_1_lord", slot_troop_home, "p_town_13"),#Alarciks to Dhirim
-#     (troop_set_slot, "trp_kingdom_2_lord", slot_troop_home, "p_town_6"),#King Samo II to Khudan
-#     (troop_set_slot, "trp_kingdom_3_lord", slot_troop_home, "p_town_3"),#Khan Kuluk to Tulga
-#     (troop_set_slot, "trp_kingdom_4_lord", slot_troop_home, "p_town_10"),#King Haraldr to Rivacheg
-#     (troop_set_slot, "trp_kingdom_5_lord", slot_troop_home, "p_town_2"),#King Cybnel to Jelkala
-#     (troop_set_slot, "trp_kingdom_6_lord", slot_troop_home, "p_town_19"),#Shahanshah Kavad IV to Ahmerrad
-#     (troop_set_slot, "trp_kingdom_7_lord", slot_troop_home, "p_town_29"),#Romulus Nepos to Sunos
-#     (troop_set_slot, "trp_kingdom_8_lord", slot_troop_home, "p_town_23"),#Leo to Halmas
-#     (troop_set_slot, "trp_kingdom_9_lord", slot_troop_home, "p_town_16"),#Godric to Tihr
-#     (troop_set_slot, "trp_kingdom_10_lord", slot_troop_home, "p_town_14"),
-#     (troop_set_slot, "trp_kingdom_11_lord", slot_troop_home, "p_town_12"),
-#     (troop_set_slot, "trp_kingdom_12_lord", slot_troop_home, "p_town_32"),
-#     (troop_set_slot, "trp_kingdom_13_lord", slot_troop_home, "p_town_24"),
-#     (troop_set_slot, "trp_kingdom_14_lord", slot_troop_home, "p_town_33"),
-#     (troop_set_slot, "trp_kingdom_15_lord", slot_troop_home, "p_town_17"),
-#     (troop_set_slot, "trp_kingdom_16_lord", slot_troop_home, "p_town_37"),
-#     (troop_set_slot, "trp_kingdom_17_lord", slot_troop_home, "p_town_31"),
-#     (troop_set_slot, "trp_kingdom_18_lord", slot_troop_home, "p_town_30"),
-#     (troop_set_slot, "trp_kingdom_19_lord", slot_troop_home, "p_castle_70"),
-#     (troop_set_slot, "trp_kingdom_20_lord", slot_troop_home, "p_town_1"),
-#     (troop_set_slot, "trp_kingdom_21_lord", slot_troop_home, "p_castle_3"),
-#     (troop_set_slot, "trp_kingdom_22_lord", slot_troop_home, "p_town_34"),
-#     (troop_set_slot, "trp_kingdom_23_lord", slot_troop_home, "p_town_36"),
-#     (troop_set_slot, "trp_kingdom_24_lord", slot_troop_home, "p_town_27"),
-#     (troop_set_slot, "trp_kingdom_25_lord", slot_troop_home, "p_town_42"),
-#     (troop_set_slot, "trp_kingdom_26_lord", slot_troop_home, "p_castle_81"),
-#     (troop_set_slot, "trp_kingdom_27_lord", slot_troop_home, "p_town_43"),
-
-
-#       (call_script, "script_dplmc_init_domestic_policy"),
-#        #Set the "original lord" values corresponding to the above.
-#       (try_for_range, ":troop_no", active_npcs_begin, active_npcs_end),
-# #        (this_or_next|eq, ":troop_no", "trp_knight_2_10"),#Nelag
-# #        (this_or_next|eq, ":troop_no", "trp_knight_3_4"),#Asugan
-# #        (this_or_next|eq, ":troop_no", "trp_knight_1_3"),#Haringoth
-# #        (this_or_next|eq, ":troop_no", "trp_knight_5_11"),#Etrosq
-#         (this_or_next|is_between, ":troop_no", kings_begin, kings_end),
-#         (is_between, ":troop_no", pretenders_begin, pretenders_end),
-
-#         (troop_get_slot, ":center_no", ":troop_no", slot_troop_home),
-#         (is_between, ":center_no", centers_begin, centers_end),
-#         (neg|party_slot_ge, ":center_no", dplmc_slot_center_original_lord, 1),
-#         (party_set_slot, ":center_no",  dplmc_slot_center_original_lord, ":troop_no"),
-
-#         #Also set "ex-lord"
-#         (neg|is_between, ":troop_no", pretenders_begin, pretenders_end),
-#         (troop_slot_eq, ":troop_no", slot_troop_occupation, slto_kingdom_hero),
-#         (neg|party_slot_eq, ":center_no", slot_town_lord, ":troop_no"),
-#         (neg|party_slot_ge, ":center_no", dplmc_slot_center_ex_lord, 1),
-#         (party_set_slot, ":center_no", dplmc_slot_center_ex_lord, ":troop_no"),
-#       (try_end),
-
-#       #Make sure the affiliation slot is set correctly.
-#       (try_begin),
-#         (is_between, "$g_player_affiliated_troop", lords_begin, kingdom_ladies_end),
-#         (troop_get_slot, ":slot_val", "$g_player_affiliated_troop", dplmc_slot_troop_affiliated),
-#         (is_between, ":slot_val", 0, 3),#0 is default, 1 is asked, in previous versions there was no use of 2
-#         (troop_set_slot, "$g_player_affiliated_troop", dplmc_slot_troop_affiliated, 3),#3 is affiliated
-#       (try_end),
-
-
-
-
-#       #Set father/mother slots for the unmarried medium-age lords, so checking for
-#       #being related will work as expected.
-#       (try_for_range, ":troop_no", lords_begin, lords_end),
-#         (troop_slot_eq, ":troop_no", slot_troop_father, -1),
-#         (troop_slot_eq, ":troop_no", slot_troop_mother, -1),
-#         (store_mul, ":father", ":troop_no", DPLMC_VIRTUAL_RELATIVE_MULTIPLIER),#defined in module_constants.py
-#         (val_add, ":father", DPLMC_VIRTUAL_RELATIVE_FATHER_OFFSET),
-#         (troop_set_slot, ":troop_no", slot_troop_father, ":father"),
-#         (store_add, ":mother", ":father", DPLMC_VIRTUAL_RELATIVE_MOTHER_OFFSET - DPLMC_VIRTUAL_RELATIVE_FATHER_OFFSET),
-#         (troop_set_slot, ":troop_no", slot_troop_mother, ":mother"),
-#       (try_end),
-
-#    #Fix kingdom lady daughters having "slot_troop_mother" set to themselves.
-#    #The old fix was in troop_get_family_relation_to_troop, but now we can
-#    #just do it once here.
-#    (try_for_range, ":troop_no", kingdom_ladies_begin, kingdom_ladies_end),
-# 		(try_begin),
-# 			(troop_slot_eq, ":troop_no", slot_troop_mother, ":troop_no"),
-# 			(troop_get_slot, ":father", ":troop_no", slot_troop_father),
-# 			(try_begin),
-# 				(is_between, ":father", active_npcs_begin, active_npcs_end),
-# 				(troop_get_slot, ":mother", ":father", slot_troop_spouse),
-# 				(troop_set_slot, ":troop_no", slot_troop_mother, ":mother"),
-# 				(try_begin),
-# 					#Print a message if desired
-# 					(ge, "$cheat_mode", 1),
-# 					(str_store_troop_name, s0, ":troop_no"),
-# 					(display_message, "@{!}DEBUG - Fixed slot_troop_mother for {s0}."),
-# 				(try_end),
-# 			(else_try),
-# 				(troop_set_slot, ":troop_no", slot_troop_mother, -1),#better than being set to herself
-# 				#Print a message if desired
-# 				(ge, "$cheat_mode", 1),
-# 				(str_store_troop_name, s0, ":troop_no"),
-# 				(display_message, "@{!}DEBUG - When fixing slot_troop_mother for {s0}, could not find a valid mother."),
-# 			(try_end),
-# 	#While we're at it, also give parents to the sisters of the middle-aged lords.
-# 		(else_try),
-# 			(troop_slot_eq, ":troop_no", slot_troop_father, -1),
-# 			(troop_slot_eq, ":troop_no", slot_troop_mother, -1),
-# 			#"Guardian" here means brother
-# 			(troop_get_slot, ":guardian", ":troop_no", slot_troop_guardian),
-# 			(ge, ":guardian", 1),
-# 			#Has brother's father
-# 			(troop_get_slot, ":father", ":guardian", slot_troop_father),
-# 			(troop_set_slot, ":troop_no", slot_troop_father, ":father"),
-# 			#Has brother's mother
-# 			(troop_get_slot, ":mother", ":guardian", slot_troop_mother),
-# 			(troop_set_slot, ":troop_no", slot_troop_mother, ":mother"),
-# 		(try_end),
-#    #Also set original factions for ladies.
-# 	   (neg|troop_slot_ge, ":troop_no", slot_troop_original_faction, 1),
-# 		(assign, ":guardian", -1),
-# 		(try_begin),
-# 		   (troop_slot_ge, ":troop_no", slot_troop_father, 1),
-# 			(troop_get_slot, ":guardian", ":troop_no", slot_troop_father),
-#  	   (else_try),
-# 		   (troop_slot_ge, ":troop_no", slot_troop_guardian, 1),
-# 			(troop_get_slot, ":guardian", ":troop_no", slot_troop_guardian),
-# 		(else_try),
-# 		   (troop_slot_ge, ":troop_no", slot_troop_spouse, 1),
-# 			(troop_get_slot, ":guardian", ":troop_no", slot_troop_spouse),
-# 	   (try_end),
-# 		(ge, ":guardian", 1),
-# 		(troop_get_slot, ":original_faction", ":guardian", slot_troop_original_faction),
-# 		(troop_set_slot, ":troop_no", slot_troop_original_faction, ":original_faction"),
-#    (try_end),
-
-# 	  ##Set relations between kingdom ladies and their relatives.
-# 	  ##Do *not* initialize their relations with anyone they aren't related to:
-# 	  ##that is used for courtship.
-# 	  ##  The purpose of this initialization is so if a kingdom lady gets promoted,
-# 	  ##her relations aren't a featureless slate.  Also, it would be interesting to
-# 	  ##further develop the idea of ladies as pursuing agendas even if they aren't
-# 	  ##leading warbands, which would benefit from giving them relations with other
-# 	  ##people.
-# 	  #
-# 	  #Because relations may already exist, only call this in instances where
-# 	  #they are 0 or 1 (the latter just means "met" between NPCs).
-#      (try_for_range, ":lady", kingdom_ladies_begin, kingdom_ladies_end),
-# 		(troop_slot_eq, ":lady", slot_troop_occupation, slto_kingdom_lady),
-# 		(troop_get_slot, ":lady_faction", ":lady", slot_troop_original_faction),
-# 		(ge, ":lady_faction", 1),
-
-# 		(try_for_range, ":other_hero", heroes_begin, heroes_end),
-# 		   (this_or_next|troop_slot_eq, ":other_hero", slot_troop_occupation, slto_kingdom_lady),
-# 			(this_or_next|troop_slot_eq, ":other_hero", slot_troop_occupation, slto_kingdom_hero),
-# 				(troop_slot_eq, ":other_hero", slot_troop_occupation, slto_inactive_pretender),
-# 			(troop_slot_eq, ":other_hero", slot_troop_original_faction, ":lady_faction"),
-
-# 			#Because this is not a new game: first check if relations have developed
-# 			(call_script, "script_troop_get_relation_with_troop", ":lady", ":other_hero"),
-# 			(is_between, reg0, 0, 2),#0 or 1
-
-# 			(try_begin),
-# 				(this_or_next|troop_slot_eq, ":lady", slot_troop_spouse, ":other_hero"),
-# 				(troop_slot_eq, ":other_hero", slot_troop_spouse, ":lady"),
-# 				(store_random_in_range, reg0, 0, 11),
-# 			(else_try),
-# 				#(call_script, "script_troop_get_family_relation_to_troop", ":lady", ":other_hero"),
-# 				(call_script, "script_dplmc_troop_get_family_relation_to_troop", ":lady", ":other_hero"),
-# 			(try_end),
-
-# 			(call_script, "script_troop_change_relation_with_troop", ":lady", ":other_hero", reg0),
-
-# 			#This relation change only applies between kingdom ladies.
-# 			(troop_slot_eq, ":other_hero", slot_troop_occupation, slto_kingdom_lady),
-# 			(is_between, ":other_hero", kingdom_ladies_begin, kingdom_ladies_end),
-
-# 			(store_random_in_range, ":random", 0, 11),
-# 			(call_script, "script_troop_change_relation_with_troop", ":lady", ":other_hero", ":random"),
-# 		(try_end),
-# 	  (try_end),
-
-#    #Change the occupation of exiled lords (not including pretenders or kings)
-#    (try_for_range, ":troop_no", lords_begin, lords_end),
-# 		(store_troop_faction, ":faction_no", ":troop_no"),
-# 		#A lord in the outlaw faction
-# 		(eq, ":faction_no", "fac_outlaws"),
-# 		#Possible values for his occupation if he's an exile (but there's some overlap between these and "bandit hero")
-# 		(this_or_next|troop_slot_eq, ":troop_no", slot_troop_occupation, slto_kingdom_hero),#<- The default
-# 		(this_or_next|troop_slot_eq, ":troop_no", slot_troop_occupation, slto_inactive),#<- This can happen joining the player faction
-# 			(troop_slot_eq, ":troop_no", slot_troop_occupation, 0),#<- This gets set for prisoners
-# 		#(Quick Check) Not leading a party or the prisoner of a party or at a center
-# 		(neg|troop_slot_ge, ":troop_no", slot_troop_leaded_party, 0),
-# 		(neg|troop_slot_ge, ":troop_no", slot_troop_prisoner_of_party, 0),
-# 		(neg|troop_slot_ge, ":troop_no", slot_troop_cur_center, 1),#deliberately 1 instead of 0
-# 		#(Slow check) Does not own any fiefs
-# 		(assign, ":end", centers_end),
-# 		(try_for_range, ":center_no", centers_begin, ":end"),
-# 			(party_slot_eq, ":center_no", slot_town_lord, ":troop_no"),
-# 			(assign, ":end", ":center_no"),#stop loop, and also signal failure
-# 		(try_end),
-# 		#(Slow check) Explicitly verify he is not a prisoner anywhere.
-# 		(call_script, "script_search_troop_prisoner_of_party", ":troop_no"),
-# 		(eq, reg0, -1),
-# 		#(Slow check) Explicitly verify he's not a member of any party
-# 		(assign, ":member_of_party", -1),
-# 		(try_for_parties, ":party_no"),
-# 			(eq, ":member_of_party", -1),
-# 			(this_or_next|eq, ":party_no", "p_main_party"),
-# 				(ge, ":party_no", centers_begin),
-# 			(party_count_members_of_type, ":count", ":party_no", ":troop_no"),
-# 			(gt, ":count", 0),
-# 			(assign, ":member_of_party", ":party_no"),
-# 		(try_end),
-# 		(eq, ":member_of_party", -1),
-# 		#Finally verified that he is in exile.  Set the slot value to make
-# 		#this easier in the future.
-# 		(troop_set_slot, ":troop_no", slot_troop_occupation, dplmc_slto_exile),
-# 		(try_begin),
-# 			(ge, "$cheat_mode", 1),
-# 			(str_store_troop_name, s0, ":troop_no"),
-# 			(display_message, "@{!}DEBUG - Changed occupation of {s0} to dplmc_slto_exile"),
-# 		(try_end),
-#    (try_end),
-
-
-
-
-#    #Initialize histories for supported pretenders.
-#    (try_for_range, ":troop_no", pretenders_begin, pretenders_end),
-#       (neg|troop_slot_eq, ":troop_no", slot_troop_met, 0),
-#       (troop_slot_eq, ":troop_no", slot_troop_occupation, slto_kingdom_hero),
-# 	  (troop_slot_eq, ":troop_no", slot_troop_playerparty_history, 0),
-# 	  (troop_set_slot, ":troop_no", slot_troop_playerparty_history, dplmc_pp_history_granted_fief),
-#    (try_end),
-
-#    #Initialize histories for promoted companions
-#    (try_for_range, ":troop_no", companions_begin, companions_end),
-# 	  (neg|troop_slot_eq, ":troop_no", slot_troop_met, 0),
-#       (troop_slot_eq, ":troop_no", slot_troop_occupation, slto_kingdom_hero),
-# 	  (neg|troop_slot_eq, ":troop_no", slot_troop_playerparty_history, dplmc_pp_history_nonplayer_entry),
-# 	  (troop_set_slot, ":troop_no", slot_troop_playerparty_history, dplmc_pp_history_granted_fief),
-#    (try_end),
-
-#    #For all centers, update new slots
-#    (try_for_range, ":center_no", centers_begin, centers_end),
-# 	  #Last attacker
-# 	  (try_begin),
-# 	     (party_slot_eq, ":center_no", dplmc_slot_center_last_attacker, 0),
-# 		 (party_slot_eq, ":center_no", dplmc_slot_center_last_attacked_time, 0),
-# 		 (party_set_slot, ":center_no", dplmc_slot_center_last_attacker, -1),
-# 	  (try_end),
-
-#       (party_slot_eq, ":center_no", dplmc_slot_center_last_transfer_time, 0),
-# 	  #Ex-lord
-# 	  (try_begin),
-#   	     (party_slot_eq, ":center_no", dplmc_slot_center_ex_lord, 0),
-# 	     (party_set_slot, ":center_no", dplmc_slot_center_ex_lord, -1),
-# 	  (try_end),
-# 	  #Original lord
-# 	  (try_begin),
-# 		(party_slot_eq, ":center_no", dplmc_slot_center_original_lord, 0),
-# 		(neg|troop_slot_eq, "trp_player", slot_troop_home, ":center_no"),
-# 		(party_set_slot, ":center_no", dplmc_slot_center_original_lord, -1),
-# 	  (try_end),
-#    (try_end),
-
-#    #Don't bother filling in "last caravan arrival" slots with fake values.
-#    #Right now the scripts check and do that automatically if they aren't
-#    #set.
-
-#       #Perform initialization for autoloot / autosell.
-#       (call_script, "script_dplmc_initialize_autoloot", 1),#argument "1" forces this to make changes
-
-#       #Fix a mistake I had introduced before, where you could get the wrong
-#       #"marry betrothed" quest when courting a lady.
-#       (try_begin),
-#         (check_quest_active, "qst_wed_betrothed_female"),
-#         (quest_get_slot, ":betrothed_troop", "qst_wed_betrothed_female", slot_quest_giver_troop),
-#         (is_between, ":betrothed_troop", kingdom_ladies_begin, kingdom_ladies_end),
-#         (display_message, "@{!}FIXED PROBLEM - Cancelled erroneous version of qst_wed_betrothed_female.  You should be able to marry normally if you try again."),
-#         (call_script, "script_abort_quest", "qst_wed_betrothed_female", 0),#abort with type 0 "event" should give no penalties to the player
-#       (try_end),
-#     #End version-checked block.
-#     (try_end),
-
-#     (try_begin),
-#       (is_between, ":diplomacy_version_code", 1, 110615),
-#     #Fix a bug that was introduced in some version before 2011-06-15 that made
-#     #all "young unmarried lords" only have half-siblings, with either their own
-#     #father or mother slot uninitialized.
-#     (try_begin),
-#       (lt, 31, heroes_begin),
-#       (neg|troop_slot_eq, 31, 31, 0),#"slot_troop_father" was 31 in those saved games
-#       (troop_set_slot, 31, 31, -1),#(it still is 31 as far as I know, but this code should remain the same even if the slot value changes)
-#     (try_end),
-#     (try_begin),
-#       (lt, 32, heroes_begin),
-#       (neg|troop_slot_eq, 32,32,0),#"slot_troop_mother" was 32 in those saved games
-#       (troop_set_slot, 32, 32, -1),
-#     (try_end),
-#     (try_for_range, ":troop_no", lords_begin, lords_end),
-#       (troop_get_slot, reg0, ":troop_no", slot_troop_father),
-#       (troop_get_slot, reg1, ":troop_no", slot_troop_mother),
-#       (try_begin),
-#         (is_between, reg0, lords_begin, lords_end),
-#         (neg|is_between, reg1, kingdom_ladies_begin, kingdom_ladies_end),
-#         (troop_get_slot, reg1, reg0, slot_troop_spouse),
-#         (is_between, reg1, kingdom_ladies_begin, kingdom_ladies_end),
-#         (troop_set_slot, ":troop_no", slot_troop_mother, reg1),
-#         (call_script, "script_update_troop_notes", ":troop_no"),#Doesn't actually do anything
-#       (else_try),
-#         (is_between, reg1, kingdom_ladies_begin, kingdom_ladies_end),
-#         (neg|is_between, reg0, lords_begin, lords_end),
-#         (troop_get_slot, reg0, reg1, slot_troop_spouse),
-#         (is_between, reg0, lords_begin, lords_end),
-#         (troop_set_slot, ":troop_no", slot_troop_father, reg0),
-#         (call_script, "script_update_troop_notes", ":troop_no"),#Doesn't actually do anything
-#       (try_end),
-#     (try_end),
-
-#     #For old saved games, a reputation bug that was introduced in the release 2011-06-06 and was fixed on 2011-06-07.
-#     (eq, ":diplomacy_version_code", 1),
-#     (assign, reg0, 0),
-#     (try_for_range, ":troop_no", lords_begin, lords_end),
-#       (troop_slot_eq, ":troop_no", slot_lord_reputation_type, lrep_none),
-#       (store_random_in_range, reg1, lrep_none, lrep_roguish),
-#       (val_max, reg1, lrep_none + 1),#So there's an extra chance of getting reputation 1, which is lrep_martial
-#       (troop_set_slot, ":troop_no", slot_lord_reputation_type, reg1),
-#       (val_add, reg0, 1),
-#     (try_end),
-
-#     (try_begin),
-#       (ge, "$cheat_mode", 1),
-#       (store_sub, reg1, reg0, 1),
-#       (display_message, "@{!} Bug fix: set personality types for {reg0} {reg1?lords:lord}"),
-#     (try_end),
-
-#     (assign, reg0, 0),
-#     (try_for_range, ":troop_no", kingdom_ladies_begin, kingdom_ladies_end),
-#       (neq, ":troop_no", "trp_knight_1_1_wife"),#That lady should not appear in the game
-#       (troop_slot_eq, ":troop_no", slot_lord_reputation_type, lrep_none),
-#       (store_random_in_range, reg1, lrep_conventional - 1, lrep_moralist + 1),
-#       (val_max, reg1, lrep_conventional),#So there's an extra chance of getting lrep_conventional
-#       (troop_set_slot, ":troop_no", slot_lord_reputation_type, reg1),
-#       (val_add, reg0, 1),
-#     (try_end),
-
-
-#     (try_begin),
-#       (ge, "$cheat_mode", 1),
-#       (store_sub, reg1, reg0, 1),
-#       (display_message, "@{!} Bug fix: set personality types for {reg0} {reg1?ladies:lady}"),
-#     (try_end),
-#   (try_end),
-
-#   #Behavior for an upgrade from Native or pre-Diplomacy 4.0 to Diplomacy 4.0
-#   (try_begin),
-#       (is_between, ":diplomacy_version_code", 0, 111001),
-#       #Fix: slot_faction_leader and slot_faction_marshall should not equal trp_player
-#       #if the player is not a member of the faction.  (This is initially true because
-#       #trp_player is 0, and uninitialized slots default to 0.)
-#       (try_for_range, ":faction_no", 0, dplmc_factions_end),
-#          (neq, ":faction_no", "fac_player_faction"),
-#          (neq, ":faction_no", "fac_player_supporters_faction"),
-#          (this_or_next|neq, ":faction_no", "$players_kingdom"),
-#          (eq, ":faction_no", 0),
-#          #The player is not a member of the faction:
-#          (try_begin),
-#             (faction_slot_eq, ":faction_no", slot_faction_leader, 0),
-#             (faction_set_slot, ":faction_no", slot_faction_leader, -1),
-#          (try_end),
-#          (try_begin),
-#             (faction_slot_eq, ":faction_no", slot_faction_marshall, 0),
-#             (faction_set_slot, ":faction_no", slot_faction_marshall, -1),
-#          (try_end),
-#       (try_end),
-#       #Initialize home slots for town merchants, elders, etc.
-#       (try_for_range, ":center_no", centers_begin, centers_end),
-#          (try_for_range, ":troop_no", dplmc_slot_town_merchants_begin, dplmc_slot_town_merchants_end),
-#             (party_get_slot, ":troop_no", ":center_no", ":troop_no"),
-#             (gt, ":troop_no", walkers_end),
-#             (troop_is_hero, ":troop_no"),
-#             (troop_slot_eq, ":troop_no", slot_troop_home, 0),
-#             (troop_set_slot, ":troop_no", slot_troop_home, ":center_no"),
-#          (try_end),
-#       (try_end),
-#       #Initialize home slots for startup merchants.  (Merchant of Praven, etc.)
-#       #This should be done after kings have their home slots initialized.
-#       (try_for_range, ":troop_no", kings_begin, kings_end),
-#          (troop_get_slot, ":center_no", ":troop_no", slot_troop_home),
-#          (val_sub, ":troop_no", kings_begin),
-#          (val_add, ":troop_no", startup_merchants_begin),
-#          (is_between, ":troop_no", startup_merchants_begin, startup_merchants_end),#Right now there's a startup merchant for each faction.  Verify this hasn't unexpectedly changed.
-#          (neg|troop_slot_ge, ":troop_no", slot_troop_home, 1),#Verify that the home slot is not already set
-#          (troop_set_slot, ":troop_no", slot_troop_home, ":center_no"),
-#       (try_end),
-#       #Reset potentially bad value in "slot_troop_stance_on_faction_issue" (i.e. 153) from auto-loot
-#       (eq, 153, slot_troop_stance_on_faction_issue),
-#       (try_for_range, ":troop_no", companions_begin, companions_end),
-#          (try_begin),
-#             (neg|troop_slot_eq, ":troop_no", slot_troop_occupation, slto_kingdom_hero),
-#             (troop_set_slot, ":troop_no", slot_troop_stance_on_faction_issue, -1),
-#          (else_try),
-#             (troop_get_slot, ":slot_val", ":troop_no", slot_troop_stance_on_faction_issue),
-#             (neg|is_between, ":slot_val", -1, 1),#0 or -1
-#             (neg|is_between, ":slot_val", heroes_begin, heroes_end),
-#             (troop_set_slot, ":troop_no", slot_troop_stance_on_faction_issue, -1),
-#          (try_end),
-#       (try_end),
-#    (try_end),
-
-#    #SB : new features
-#    (try_begin),
-#       (is_between, ":diplomacy_version_code", 1, 170001), #1.171 invasion patch
-#       (display_log_message, "@Performing 2017 updates, thank you for your patience!", message_positive),
-#       #set up camera keys
-#       (call_script, "script_setup_camera_keys"),
-#       (call_script, "script_dplmc_init_quest_delegate_states"),
-
-#       #re-appoint employees (usually the player can just enter court to fix this)
-#       (assign, ":prev_employee", dplmc_prev_employee),
-#       (try_begin),
-#         (gt, "$g_player_chamberlain", 0),
-#         (call_script, "script_dplmc_appoint_chamberlain"),  #fix for wrong troops after update
-#         (call_script, "script_dplmc_copy_inventory", ":prev_employee", "$g_player_chamberlain"), #move inv over, player might want to play around with treasury
-#         (try_for_range, ":slot_no", 0, dplmc_slot_troop_affiliated), #IGNORE the last slot because we want to keep latest value
-#           (troop_get_slot, ":old_value", ":prev_employee", ":slot_no"),
-#           (troop_set_slot, "$g_player_chamberlain", ":slot_no", ":old_value"),
-#         (try_end),
-#       (try_end),
-#       (val_add, ":prev_employee", 1),
-
-#       (try_begin),
-#         (gt, "$g_player_constable", 0),
-#         (call_script, "script_dplmc_appoint_constable"),
-#         (call_script, "script_dplmc_copy_inventory", ":prev_employee", "$g_player_constable"), #move inv over, player might want to play around with treasury
-#         (try_for_range, ":slot_no", 0, dplmc_slot_troop_affiliated + 1),
-#           (troop_get_slot, ":old_value", ":prev_employee", ":slot_no"),
-#           (troop_set_slot, "$g_player_constable", ":slot_no", ":old_value"),
-#         (try_end),
-#       (try_end),
-#       (val_add, ":prev_employee", 1),
-
-#       (try_begin),
-#         (gt, "$g_player_chancellor", 0),
-#         (call_script, "script_dplmc_appoint_chancellor"),
-#         (call_script, "script_dplmc_copy_inventory", ":prev_employee", "$g_player_chancellor"), #move inv over, player might want to play around with treasury
-#         (try_for_range, ":slot_no", 0, dplmc_slot_troop_affiliated + 1),
-#           (troop_get_slot, ":old_value", ":prev_employee", ":slot_no"),
-#           (troop_set_slot, "$g_player_chancellor", ":slot_no", ":old_value"),
-#         (try_end),
-#       (try_end),
-#       (val_add, ":prev_employee", 1),
-#       #replace recruiter/scouts/messenger - probably should have made them non-capturable via tf_allways_fall_dead
-#       (store_sub, ":troop_offset", dplmc_employees_begin, dplmc_prev_employee), #around 142
-#       # (assign, ":messenger_troop", dplmc_prev_employee, 3), #skip employees
-#       (store_add, ":recruiter_troop", ":prev_employee", 3), #933 through 936
-#       #got the correct offset, now replace them from (active) parties
-#       # (party_clear, "p_temp_party"),
-#       (try_for_parties, ":party_no"),
-#         (party_is_active, ":party_no"),
-#         # (party_get_template_id, ":party_template", ":party_no"),
-#         # (this_or_next|eq, ":party_template", "pt_dplmc_recruiter"),
-#         # (eq, ":party_template", "pt_messenger_party"),
-#         # (party_count_companions_of_type, ":troop_count", ":party_no", ":recruiter_troop"),
-#         # (try_begin), #probably should account for wounded but these really shouldn't be anywhere outside their party templates
-#           # (gt, ":troop_count", 0),
-#           # (party_remove_members, ":party_no", ":recruiter_troop", ":troop_count"),
-#           # (try_begin),  #probably fixes recruiter being stacked after the recruits
-#             # (eq, ":party_template", "pt_dplmc_recruiter"),
-#             # (party_add_leader, ":party_no", "trp_dplmc_recruiter"),
-#           # (else_try),
-#             # (party_add_members, ":party_no", "trp_dplmc_recruiter", ":troop_count"),
-#           # (try_end),
-#         # (try_end),
-#         # (party_count_companions_of_type, ":troop_count", ":party_no", ":messenger_troop"),
-#         # (try_begin),
-#           # (gt, ":troop_count", 0),
-#           # (party_remove_members, ":party_no", ":messenger_troop", ":troop_count"),
-#           # (try_begin),  #probably fixes messenger being stacked after the recruits
-#             # (eq, ":party_template", "pt_dplmc_messenger"),
-#             # (party_add_leader, ":party_no", "trp_dplmc_messenger"),
-#           # (else_try),
-#             # (party_add_members, ":party_no", "trp_dplmc_messenger", ":troop_count"),
-#           # (try_end),
-#         # (try_end),
-#         # (party_count_prisoners_of_type, ":prisoner_count", ":party_no", ":recruiter_troop"),
-#         # (try_begin),
-#           # (gt, ":prisoner_count", 0),
-#           # (party_remove_prisoners, ":party_no", ":recruiter_troop", ":prisoner_count"),
-#           # (party_add_prisoners, ":party_no", "trp_dplmc_recruiter", ":prisoner_count"),
-#         # (try_end),
-
-#         (party_get_num_companion_stacks, ":num_stacks", ":party_no"),
-#         (gt, ":num_stacks", 0),
-#         (try_for_range_backwards, ":stack_no", 0, ":num_stacks"),
-#           (party_stack_get_troop_id, ":troop_no", ":party_no", ":stack_no"),
-#           (is_between, ":troop_no", ":prev_employee", ":recruiter_troop"),
-#           (party_stack_get_size, ":stack_size", ":party_no", ":stack_no"),
-#           (party_remove_members, ":party_no", ":troop_no", ":stack_size"),
-#           (val_add, ":troop_no", ":troop_offset"),
-#           # (try_begin),
-#             # (val_sub, ":stack_size", 1), #we try prepending first
-#             # (party_add_leader, ":party_no", ":troop_no"),
-#           # (try_end),
-#           (party_add_members, ":party_no", ":troop_no", ":stack_size"),
-#         (try_end),
-#         (party_get_num_prisoner_stacks, ":num_stacks", ":party_no"),
-#         (gt, ":num_stacks", 0),
-#         (try_for_range_backwards, ":stack_no", 0, ":num_stacks"),
-#           (party_prisoner_stack_get_troop_id, ":troop_no", ":party_no", ":stack_no"),
-#           (is_between, ":troop_no", ":prev_employee", ":recruiter_troop"),
-#           (party_prisoner_stack_get_size, ":stack_size", ":party_no", ":stack_no"),
-#           (party_remove_prisoners, ":party_no", ":troop_no", ":stack_size"),
-#           (val_add, ":troop_no", ":troop_offset"),
-#           (party_add_prisoners, ":party_no", ":troop_no", ":stack_size"),
-#         (try_end),
-#       (try_end),
-
-#       #set up disguise system, disabled by default
-#       (assign, "$g_dplmc_player_disguise", 0),
-#       (try_begin),
-#         (assign, ":disguise", disguise_pilgrim), #always available
-#         #farmer, acquired from village elders
-#         (assign, ":villages_end", villages_end),
-#         (try_for_range, ":center_no", villages_begin, ":villages_end"),
-#           (party_slot_ge, ":center_no", slot_center_player_relation, 25),
-#           (val_add, ":disguise", disguise_farmer),
-#           (assign, ":villages_end", -1), #loop break
-#         (try_end),
-
-
-#         #hunter, acquired from background or archery skill
-#         (try_begin),
-#           (store_proficiency_level, ":cur_amount", "trp_player", wpt_archery),
-#           (this_or_next|ge, ":cur_amount", 250),
-#           (this_or_next|eq, "$background_type", cb_forester),
-#           (this_or_next|eq, "$background_answer_2", cb2_steppe_child),
-#           (eq, "$background_answer_3", cb3_poacher),
-#           (val_add, ":disguise", disguise_hunter),
-#         (try_end),
-#         #merchant, from background or gold count or enterprise
-#         (try_begin),
-#           (assign, ":continue", 0),
-#           (assign, ":villages_end", towns_end),
-#           (try_for_range, ":center_no", towns_begin, ":villages_end"),
-#             (party_slot_ge, ":center_no", slot_center_player_enterprise, 1),
-#             (assign, ":continue", 1),
-#             (assign, ":villages_end", towns_begin), #loop break
-#           (try_end),
-#           (try_begin),
-#             (eq, ":continue", 0),
-#             (store_troop_gold, ":cur_amount", "trp_player"),
-#             (store_skill_level, ":cur_skill", "trp_player", "skl_trade"),
-#             (ge, ":cur_skill", 5),
-#             (ge, ":cur_amount", 10000),
-#             (assign, ":continue", 1),
-#           (try_end),
-#           (this_or_next|gt, ":continue", 0),
-#           (this_or_next|eq, "$background_type", cb_merchant),
-#           (this_or_next|eq, "$background_answer_2", cb2_merchants_helper),
-#           (eq, "$background_answer_3", cb3_peddler),
-#           (val_add, ":disguise", disguise_merchant),
-#         (try_end),
-
-#         #guard, from background or weapon mastery
-#         (try_begin),
-#           (store_skill_level, ":cur_skill", "trp_player", "skl_weapon_master"),
-#           (this_or_next|ge, ":cur_skill", 5),
-#           (this_or_next|eq, "$background_type", cb_guard),
-#           (this_or_next|eq, "$background_answer_3", dplmc_cb3_bravo),
-#           (this_or_next|eq, "$background_answer_3", dplmc_cb3_merc),
-#           (eq, "$background_answer_3", cb3_squire),
-#           (val_add, ":disguise", disguise_guard),
-#         (try_end),
-
-#         #bard, from background or known songs
-#         (try_begin),
-#           (store_add, ":cur_amount", "$allegoric_poem_recitations", "$mystic_poem_recitations"),
-#           (val_add, ":cur_amount", "$tragic_poem_recitations"),
-#           (val_add, ":cur_amount", "$heroic_poem_recitations"),
-#           (val_add, ":cur_amount", "$comic_poem_recitations"),
-#           (this_or_next|ge, ":cur_amount", 2), #2 poems known
-#           (eq, "$background_answer_3", cb3_troubadour),
-#           (val_add, ":disguise", disguise_bard),
-#         (try_end),
-#       (try_end),
-#       (troop_set_slot, "trp_player", slot_troop_player_disguise_sets, ":disguise"),
-
-#       #equip voulges
-#       #(troop_add_item, "trp_fighter_woman", "itm_socketed_axe"),
-#       #(troop_add_item, "trp_swadian_sergeant", "itm_battle_axe"),
-#       #(troop_add_item, "trp_swadian_deserter", "itm_socketed_axe"),
-#       #(troop_add_item, "trp_swadian_deserter", "itm_battle_axe_3"),
-#       #(troop_add_item, "trp_swadian_crossbowman", "itm_socketed_axe"),
-#       #(troop_add_item, "trp_swadian_sharpshooter", "itm_battle_axe_3"),
-#       #(troop_add_item, "trp_vaegir_guard", "itm_battle_axe_3"),
-#       #(troop_add_item, "trp_vaegir_guard", "itm_battle_axe"),
-#       #(troop_add_item, "trp_vaegir_infantry", "itm_battle_axe_3"),
-#       #(troop_remove_item, "trp_vaegir_infantry", "itm_battle_axe"),
-
-#       #add coloured tunics to messengers, remove leather_jerkin
-#       #(troop_remove_item, "trp_swadian_messenger", "itm_leather_jerkin"),
-#       #(troop_remove_item, "trp_vaegir_messenger", "itm_leather_jerkin"),
-#       #(troop_remove_item, "trp_vaegir_messenger", "itm_sword_medieval_b"),
-#       #(troop_remove_item, "trp_khergit_messenger", "itm_leather_jerkin"),
-#       #(troop_remove_item, "trp_khergit_messenger", "itm_short_bow"),
-#       #(troop_remove_item, "trp_khergit_messenger", "itm_arrows"),
-#       #(troop_remove_item, "trp_nord_messenger", "itm_leather_jerkin"),
-#       #(troop_remove_item, "trp_nord_messenger", "itm_short_bow"),
-#       #(troop_remove_item, "trp_rhodok_messenger", "itm_leather_jerkin"),
-#       #(troop_remove_item, "trp_rhodok_messenger", "itm_short_bow"),
-#       #(troop_remove_item, "trp_rhodok_messenger", "itm_arrows"),
-#       #sarranid messenger already copied from horseman
-#       #but we need to reassign them
-#       #(troop_set_faction, "trp_sarranid_messenger", "fac_kingdom_6"),
-#       #(troop_set_faction, "trp_sarranid_prison_guard", "fac_kingdom_6"),
-#       #(troop_set_faction, "trp_sarranid_castle_guard", "fac_kingdom_6"),
-#       #(troop_add_item, "trp_swadian_messenger", "itm_arena_tunic_red"),
-#       #(troop_add_item, "trp_vaegir_messenger", "itm_fighting_axe"),
-#       #(troop_add_item, "trp_vaegir_messenger", "itm_studded_leather_coat"),
-#       #(troop_add_item, "trp_khergit_messenger", "itm_khergit_bow"),
-#       #(troop_add_item, "trp_khergit_messenger", "itm_khergit_arrows"),
-#       #(troop_add_item, "trp_khergit_messenger", "itm_nomad_robe"),
-#       #(troop_add_item, "trp_nord_messenger", "itm_long_bow"),
-#       #(troop_add_item, "trp_nord_messenger", "itm_arena_tunic_blue"),
-#       #(troop_add_item, "trp_rhodok_messenger", "itm_light_crossbow"),
-#       #(troop_add_item, "trp_rhodok_messenger", "itm_steel_bolts"),
-#       #(troop_add_item, "trp_rhodok_messenger", "itm_arena_tunic_green"),
-
-#       #equip tavern drunks/assassin (could be done as easily in trigger)
-#       (troop_add_item, "trp_belligerent_drunk","itm_sword_medieval_a"),
-#       (troop_add_item, "trp_belligerent_drunk","itm_sword_khergit_1"),
-#       (troop_add_item, "trp_belligerent_drunk","itm_sword_medieval_a"),
-#       (troop_remove_item, "trp_hired_assassin","itm_sword_medieval_a"),
-#       (troop_add_item, "trp_hired_assassin","itm_sword_viking_3"),
-#       (troop_add_item, "trp_hired_assassin","itm_sword_medieval_d_long"),
-#       (troop_add_item, "trp_hired_assassin","itm_sword_khergit_4"),
-#       (troop_add_item, "trp_hired_assassin","itm_arabian_sword_d"),
-#       (troop_add_item, "trp_hired_assassin","itm_arabian_sword_d"),
-
-#       #sarranid "castle" guard replace with regular troop
-#       (try_for_range, ":faction_no", kingdoms_begin, kingdoms_end),
-#         (faction_slot_eq, ":faction_no", slot_faction_culture, "fac_culture_6"),
-#         (faction_slot_eq, ":faction_no", slot_faction_guard_troop, "trp_sassanid_castle_guard"),
-#         (faction_set_slot, ":faction_no", slot_faction_guard_troop, "trp_sassanid_armored_footman"),
-#       (try_end),
-
-#       (troop_add_item, "trp_bonus_chest_2","itm_bride_dress", imod_stubborn),
-#       (troop_add_item, "trp_bonus_chest_2","itm_bride_crown", imod_deadly),
-#       (troop_add_item, "trp_bonus_chest_2","itm_bride_shoes", imod_smelling),
-#       (troop_add_item, "trp_bonus_chest_2","itm_torch", imod_old),
-
-#       (troop_add_item, "trp_bonus_chest_3","itm_black_armor", imod_lordly),
-#       (troop_add_item, "trp_bonus_chest_3","itm_black_greaves", imod_lordly),
-#       (troop_add_item, "trp_bonus_chest_3","itm_old_spangenhelm_3", imod_lordly),
-#       (troop_add_item, "trp_bonus_chest_3","itm_steel_shield", imod_lordly),
-#       (troop_add_item, "trp_bonus_chest_3","itm_charger", imod_lordly), #charger_plate_1
-
-#       #training ground variables based on global
-#       (try_for_range, ":npc", training_ground_trainers_begin, training_ground_trainers_end),
-#         #init trainer vars, global applied to all trainers instead of individual progress
-#         # (troop_set_slot, ":npc", slot_troop_trainer_met, 0),
-#         (troop_set_slot, ":npc", slot_troop_trainer_waiting_for_result, "$waiting_for_training_fight_result"),
-#         (troop_set_slot, ":npc", slot_troop_trainer_training_fight_won, "$training_fight_won"),
-#         (troop_set_slot, ":npc", slot_troop_trainer_num_opponents_to_beat, "$num_opponents_to_beat_in_a_row"),
-#         (troop_set_slot, ":npc", slot_troop_trainer_training_system_explained, "$training_system_explained"),
-#         (troop_set_slot, ":npc", slot_troop_trainer_opponent_troop, "$novicemaster_opponent_troop"),
-#         (troop_set_slot, ":npc", slot_troop_trainer_training_difficulty, "$novice_training_difficulty"),
-#         #add random equipment
-#         (store_random_in_range, ":item_no", "itm_practice_sword", "itm_practice_shield"),
-#         (troop_add_item, ":npc", ":item_no", imod_champion),
-#         (store_sub, ":offset", ":npc", training_ground_trainers_begin),
-#         #init grounds vars
-#         (store_add, ":grounds", ":offset", training_grounds_begin),
-#         (store_add, ":scene", ":offset", "scn_training_ground_ranged_melee_1"),
-#         (party_set_slot, ":grounds", slot_grounds_melee, ":scene"),
-#         (store_add, ":scene", ":offset", "scn_training_ground_horse_track_1"),
-#         (party_set_slot, ":grounds", slot_grounds_track, ":scene"),
-#         (party_set_slot, ":grounds", slot_grounds_trainer, ":npc"),
-#         (party_set_slot, ":grounds", slot_grounds_count, "$g_training_ground_training_count"),
-#         (troop_set_slot, ":npc", slot_troop_cur_center, ":grounds"),
-#       (try_end),
-
-
-#     #other tavern npc based on location
-#       (try_for_range, ":town_no", towns_begin, towns_end),
-#         (try_for_range, ":slot_no", slot_center_ransom_broker, slot_center_tavern_minstrel + 1),
-#           (neq, ":slot_no", slot_center_traveler_info_faction),
-#           (party_get_slot, ":npc", ":town_no", ":slot_no"),
-#           (is_between, ":npc", ransom_brokers_begin, tavern_minstrels_end),
-#           (troop_set_slot, ":npc", slot_troop_cur_center, ":town_no"),
-#         (try_end),
-#       (try_end),
-#     (try_end),
-
-#     (try_begin),
-#       (is_between, ":diplomacy_version_code", 170301, 190101),
-#       (display_log_message, "@Performing 2019 updates, thank you for your patience!", message_positive),
-#       #(call_script, "script_dplmc_init_faction_gender_ratio", 0),
-#     (try_end),
-#     #Ensure $character_gender is set correctly
-#     (try_begin),
-#       (call_script, "script_cf_dplmc_troop_is_female", "trp_player"),
-#       (assign, "$character_gender", tf_female),
-#     (else_try),
-#       (assign, "$character_gender", tf_male),
-#     (try_end),
-#    ##diplomacy end+
-
-#    (assign, reg1, ":save_reg1"),#Revert register
-#    (assign, reg0, ":save_reg0"),#Revert register
-
-#    ]),
-
    #updates info_pages dynamically with DPLMC settings
    ("dplmc_update_info_settings",
    [
@@ -93110,7 +92143,7 @@ Born at {s43}^Contact in {s44} of the {s45}.^\
             (assign, "$g_talk_troop_relation", ":new_effective_relation"),
             (call_script, "script_setup_talk_info"),
           (try_end),
-          (call_script, "script_update_troop_notes", ":troop_no"),
+          #(call_script, "script_update_troop_notes", ":troop_no"),
         (try_end),
       (try_end),
   ]),

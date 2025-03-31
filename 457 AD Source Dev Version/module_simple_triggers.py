@@ -551,7 +551,7 @@ simple_triggers = [
 		(display_message,"@{s4} has escaped from captivity."),
 		(try_end),
 	(call_script, "script_change_troop_faction", ":faction_leader", "fac_outlaws"),
-	(call_script, "script_update_troop_notes", ":faction_leader"),
+	#(call_script, "script_update_troop_notes", ":faction_leader"),
 	(try_end),
 
 	(try_for_parties, ":party"),

@@ -2485,11 +2485,11 @@ TOTAL:  {reg5}"),
        [
          (try_for_range, ":hero", active_npcs_begin, active_npcs_end),
            (troop_slot_eq, ":hero", slot_troop_occupation, slto_kingdom_hero),
-           (call_script, "script_update_troop_notes", ":hero"),
+           #(call_script, "script_update_troop_notes", ":hero"),
          (try_end),
 
          (try_for_range, ":lady", kingdom_ladies_begin, kingdom_ladies_end),
-           (call_script, "script_update_troop_notes", ":lady"),
+           #(call_script, "script_update_troop_notes", ":lady"),
            (call_script, "script_update_troop_political_notes", ":lady"),
            (call_script, "script_update_troop_location_notes", ":lady", 0),
          (try_end),
@@ -11163,6 +11163,7 @@ TOTAL:  {reg5}"),
            (change_screen_mission),
          (try_end),
         ],"Door to the village center."),
+
        ##diplomacy begin
       ("dplmc_village_elder_meeting",[
          (call_script, "script_cf_village_normal_cond", "$current_town"), #SB : conditional check
@@ -15052,63 +15053,26 @@ TOTAL:  {reg5}"),
      ]),
 	 ##nested diplomacy end+
 
-    #("recruit_nobles",[(is_between, "$current_town",
-    #    castles_begin, castles_end),      (call_script,
-    #   "script_cf_town_castle_recruit_volunteers_cond"),]
-    #   ,"Recruit Veterans.",
-    #   [
-    #
-    #        (try_begin),
-    #(troop_slot_ge, "trp_player", slot_troop_renown, 200), #need high renown to hire noble troops
-    #     (try_begin),
-    #       (call_script, "script_cf_enter_center_location_bandit_check"),
-    #     (else_try),
-    #       (jump_to_menu, "mnu_recruit_volunteers_town_3"),
-    #     (try_end),
-    #   (else_try),
-    #         (display_message,"@You need more renown to hire noble troops.",0xFFFFAAAA),
-    #       (try_end),
-    #    ]),
+("recruit_volunteers_town_1",[
+  (eq, "$freelancer_state", 0),
+  (eq, "$sneaked_into_town", disguise_none),]
+  ,"Recruit Volunteers.", [
 
-    #("recruit_volunteers_town_1",[(is_between, "$current_town",
-    #    towns_begin, towns_end),      (call_script,
-    #   "script_cf_town_recruit_volunteers_cond"),]
-    #   ,"Recruit Volunteers.",
-    #   [
-
-    #    (try_begin),
-    #      (troop_slot_ge, "trp_player", slot_troop_renown, 70), #need high renown to hire noble troops
-    #     (try_begin),
-    #       (call_script, "script_cf_enter_center_location_bandit_check"),
-    #     (else_try),
-    #       (jump_to_menu, "mnu_recruit_volunteers_town_2"),
-    #     (try_end),
-    #    (else_try),
-    #         (display_message,"@You need more renown to hire troops from here.",0xFFFFAAAA),
-    #       (try_end),
-    #    ]),
-
-    ("recruit_volunteers_town_1",[
-(eq, "$freelancer_state", 0),
-(eq, "$sneaked_into_town", disguise_none),]
-       ,"Recruit Volunteers.",
-       [
-
-        (try_begin),
-        (eq, "$freelancer_state", 1), #can't recruit troops while in freelancer
-	(display_message,"@Can't recruit troops while serving in a lord's army.",0xFFFFAAAA),
+  (try_begin),
+    (eq, "$freelancer_state", 1), #can't recruit troops while in freelancer
+	  (display_message,"@Can't recruit troops while serving in a lord's army.",0xFFFFAAAA),
 	(else_try),
-	(troop_slot_ge, "trp_player", slot_troop_renown, 100), #need high renown to hire troops
+	  (troop_slot_ge, "trp_player", slot_troop_renown, 100), #need high renown to hire troops
 		(try_begin),
-		(call_script, "script_cf_enter_center_location_bandit_check"),
-		(else_try),
-		(assign, "$temp_troop", -1),
-		(assign, reg43, 1),
-		(assign, "$temp4", 1),
-		(start_presentation, "prsnt_barracks"),
+		  (call_script, "script_cf_enter_center_location_bandit_check"),
+		  (else_try),
+		  (assign, "$temp_troop", -1),
+		  (assign, reg43, 1),
+		  (assign, "$temp4", 1),
+		  (start_presentation, "prsnt_barracks"),
 		(try_end),
-        (else_try),
-	(display_message,"@You need more renown to hire troops from here.",0xFFFFAAAA),
+    (else_try),
+      (display_message,"@You need more renown to hire troops from here.",0xFFFFAAAA),
         (try_end),
         ]),
 
