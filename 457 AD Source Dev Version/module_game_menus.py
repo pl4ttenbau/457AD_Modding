@@ -3800,6 +3800,7 @@ TOTAL:  {reg5}"),
 
 
         (try_begin),
+          (this_or_next|eq, "$g_encountered_party_template", "pt_roman_bandits"),
           (eq, "$g_encountered_party_template", "pt_looters"),
           (set_background_mesh, "mesh_pic_bandits"),
         (else_try),
@@ -3821,6 +3822,7 @@ TOTAL:  {reg5}"),
           (eq, "$g_encountered_party_template", "pt_forest_bandits"),
           (set_background_mesh, "mesh_pic_forest_bandits"),
         (else_try),
+          (this_or_next|eq, "$g_encountered_party_template", "pt_persian_bandits"),
           (this_or_next|eq, "$g_encountered_party_template", "pt_deserters"),
           (eq, "$g_encountered_party_template", "pt_routed_warriors"),
           (set_background_mesh, "mesh_pic_deserters"),
@@ -3854,6 +3856,9 @@ TOTAL:  {reg5}"),
 		(else_try),
             	(set_background_mesh, "mesh_pic_swad"),
 		(try_end),
+	(else_try),
+          (encountered_party_is_attacker),
+          (set_background_mesh, "mesh_pic_bandits"),
         (try_end),
     ],
     [
@@ -4744,6 +4749,7 @@ TOTAL:  {reg5}"),
 
               (call_script, "script_cf_check_hero_can_escape_from_player", ":stack_troop"),
 
+		(assign, "$temp", ":stack_troop"),
               (str_store_troop_name, s1, ":stack_troop"),
               (str_store_faction_name, s3, ":defeated_faction"),
               (str_store_string, s17, "@{s1} of {s3} managed to escape."),
@@ -5076,7 +5082,16 @@ TOTAL:  {reg5}"),
     "enemy_slipped_away",0,
     "{s17}",
     "none",
-    [],
+    [
+        (try_begin),
+          (is_between, "$temp", heroes_begin, heroes_end),
+          (set_fixed_point_multiplier, 100),
+          (position_set_x, pos0, 70),
+          (position_set_y, pos0, 5),
+          (position_set_z, pos0, 75),
+          (set_game_menu_tableau_mesh, "tableau_troop_note_mesh", "$temp", pos0),
+        (try_end),
+],
     [
       ("continue",[],"Continue...",[(jump_to_menu,"mnu_total_victory")]),
     ]
@@ -6083,6 +6098,16 @@ TOTAL:  {reg5}"),
         (call_script, "script_encounter_calculate_fit"),
         (assign,"$all_doors_locked",1),
         (assign, "$current_town","$g_encountered_party"),
+
+        (try_begin),
+          (party_get_slot, ":center_lord", "$g_encountered_party", slot_town_lord),
+          (ge, ":center_lord", 0),
+          (set_fixed_point_multiplier, 100),
+          (position_set_x, pos0, 70),
+          (position_set_y, pos0, 5),
+          (position_set_z, pos0, 75),
+          (set_game_menu_tableau_mesh, "tableau_troop_note_mesh", ":center_lord", pos0),
+        (try_end),
 
         (try_begin),
           (eq, "$new_encounter", 1),
@@ -7675,6 +7700,7 @@ TOTAL:  {reg5}"),
           (ge, ":blockplace_place", 1),
           (eq, "$g_infiltracion_interna", 0),
           (neq, "$g_traicion_interna", 1),
+	(eq, 1, 0), #madsci block this for now as it's broken
         ],
         "Send some men to infiltrate the place.",
         [
@@ -9931,12 +9957,22 @@ TOTAL:  {reg5}"),
 
 (
     "requested_castle_granted_to_player",mnf_scale_picture,
-    "You receive a message from your liege, {s3}.^^\
- {reg4?She:He} has decided to grant {s2}{reg3? and the nearby village of {s4}:} to you, with all due incomes and titles, to hold in {reg4?her:his} name for as long as you maintain your oath of homage..",
+    "You receive a message from your liege, {s3}.^^ "+
+ "{reg4?She:He} has decided to grant {s2}{reg3? and the nearby village of {s4}:} to you, with all due incomes and titles, to hold in {reg4?her:his} name for as long as you maintain your oath of homage..",
     "none",
     [
 		(set_background_mesh, "mesh_pic_messenger"),
 		(faction_get_slot, ":faction_leader", "$players_kingdom", slot_faction_leader),
+
+	(try_begin),
+          (is_between, ":faction_leader", heroes_begin, heroes_end),
+          (set_fixed_point_multiplier, 100),
+          (position_set_x, pos0, 70),
+          (position_set_y, pos0, 5),
+          (position_set_z, pos0, 75),
+          (set_game_menu_tableau_mesh, "tableau_troop_note_mesh", ":faction_leader", pos0),
+	(try_end),
+
 		(str_store_troop_name, s3, ":faction_leader"),
 		(str_store_party_name, s2, "$g_center_to_give_to_player"),
 		(try_begin),
@@ -9968,12 +10004,22 @@ TOTAL:  {reg5}"),
 
 (
     "requested_castle_granted_to_player_husband", mnf_scale_picture,
-    "You receive a message from your liege, {s3}.^^\
- {reg4?She:He} has decided to grant {s2}{reg3? and the nearby village of {s4}:} to your husband, {s7}.",
+    "You receive a message from your liege, {s3}.^^ "+
+ "{reg4?She:He} has decided to grant {s2}{reg3? and the nearby village of {s4}:} to your husband, {s7}.",
     "none",
     [
 		(set_background_mesh, "mesh_pic_messenger"),
 		(faction_get_slot, ":faction_leader", "$players_kingdom", slot_faction_leader),
+
+	(try_begin),
+          (is_between, ":faction_leader", heroes_begin, heroes_end),
+          (set_fixed_point_multiplier, 100),
+          (position_set_x, pos0, 70),
+          (position_set_y, pos0, 5),
+          (position_set_z, pos0, 75),
+          (set_game_menu_tableau_mesh, "tableau_troop_note_mesh", ":faction_leader", pos0),
+	(try_end),
+
 		(str_store_troop_name, s3, ":faction_leader"),
 		(str_store_party_name, s2, "$g_center_to_give_to_player"),
 		(try_begin),
@@ -10024,6 +10070,16 @@ TOTAL:  {reg5}"),
      (str_store_troop_name, s3, ":faction_leader"),
      (str_store_party_name, s2, "$g_center_to_give_to_player"),
      (party_get_slot, ":new_owner", "$g_center_to_give_to_player", slot_town_lord),
+
+	(try_begin),
+          (is_between, ":new_owner", heroes_begin, heroes_end),
+          (set_fixed_point_multiplier, 100),
+          (position_set_x, pos0, 70),
+          (position_set_y, pos0, 5),
+          (position_set_z, pos0, 75),
+          (set_game_menu_tableau_mesh, "tableau_troop_note_mesh", ":new_owner", pos0),
+	(try_end),
+
 	(try_begin),
 	(eq, ":new_owner", ":faction_leader"),
 	(str_store_string, s5, "@myself"),
@@ -13759,14 +13815,17 @@ TOTAL:  {reg5}"),
 		(is_between, ":town_faction", npc_kingdoms_begin, npc_kingdoms_end),
            	(try_end),
 	(try_begin), #madsci failsafe
+	(this_or_next|eq, ":town_faction", "fac_indigenoi"),
 	(le, ":tier_2_troop", 0),
 	(assign, ":tier_2_troop", "trp_manhunter"),
 	(try_end),
 	(try_begin),
+	(this_or_next|eq, ":town_faction", "fac_indigenoi"),
 	(le, ":tier_3_troop", 0),
 	(assign, ":tier_3_troop", "trp_manhunter"),
 	(try_end),
 	(try_begin),
+	(this_or_next|eq, ":town_faction", "fac_indigenoi"),
 	(le, ":tier_4_troop", 0),
 	(assign, ":tier_4_troop", "trp_manhunter"),
 	(try_end),
@@ -13871,6 +13930,7 @@ TOTAL:  {reg5}"),
              (le, ":tier_2_troop", 0),
              (faction_get_slot, ":tier_2_troop", ":town_faction", slot_faction_tier_2_troop),
 	(gt, ":tier_2_troop", 0),
+	(neq, ":town_faction", "fac_indigenoi"),
 	(else_try),
 	(assign, ":tier_2_troop", "trp_manhunter"),
            (try_end),
@@ -13878,6 +13938,7 @@ TOTAL:  {reg5}"),
              (le, ":tier_3_troop", 0),
              (faction_get_slot, ":tier_3_troop", ":town_faction", slot_faction_tier_3_troop),
 	(gt, ":tier_3_troop", 0),
+	(neq, ":town_faction", "fac_indigenoi"),
 	(else_try),
 	(assign, ":tier_3_troop", "trp_manhunter"),
            (try_end),
@@ -16471,16 +16532,16 @@ TOTAL:  {reg5}"),
     [
       (try_begin),
         (eq, "$g_battle_result", 1),
-        (str_store_string, s9, "@The bandits are broken!\
- Those few who remain alive and conscious run off with their tails between their legs,\
- terrified of the peasants and their new champion."),
+        (str_store_string, s9, "@The bandits are broken! ^^"+
+ "Those few who remain alive and conscious run off with their tails between their legs, "+
+ "terrified of the peasants and their new champion."),
         (call_script, "script_succeed_quest", "qst_train_peasants_against_bandits"),
         (jump_to_menu, "mnu_train_peasants_against_bandits_success"),
       (else_try),
         (call_script, "script_fail_quest", "qst_train_peasants_against_bandits"),
-        (str_store_string, s9, "@Try as you might, you could not defeat the bandits.\
- Infuriated, they raze the village to the ground to punish the peasants,\
- and then leave the burning wasteland behind to find greener pastures to plunder."),
+        (str_store_string, s9, "@Try as you might, you could not defeat the bandits. ^^"+
+ "Infuriated, they raze the village to the ground to punish the peasants,"+
+ "and then leave the burning wasteland behind to find greener pastures to plunder."),
         (set_background_mesh, "mesh_pic_looted_village"),
       (try_end),
      ],
@@ -16500,11 +16561,11 @@ TOTAL:  {reg5}"),
 
    (
     "train_peasants_against_bandits_success",mnf_disable_all_keys,
-    "The bandits are broken!\
- Those few who remain run off with their tails between their legs,\
- terrified of the peasants and their new champion.\
- The villagers have little left in the way of wealth after their ordeal,\
- but they offer you all they can find to show their gratitude.",
+    "The bandits are broken! ^^"+
+ "Those few who remain run off with their tails between their legs, "+
+ "terrified of the peasants and their new champion. "+
+ "The villagers have little left in the way of wealth after their ordeal, "+
+ "but they offer you all they can find to show their gratitude.",
     "none",
     [(party_clear, "p_temp_party"),
      #SB : probably apply casualties before adding new troops?
@@ -16512,6 +16573,7 @@ TOTAL:  {reg5}"),
      (store_faction_of_party, ":village_faction", "$current_town"), #assuming player trains them with local weapons
      (faction_get_slot, ":recruit_troop", ":village_faction", slot_faction_tier_1_troop),
 	(try_begin),
+	(this_or_next|eq, ":village_faction", "fac_indigenoi"),
 	(le, ":recruit_troop", 0),
 	(assign, ":recruit_troop", "trp_manhunter"), #madsci failsafe
 	(try_end),
@@ -18841,12 +18903,12 @@ goods, and books will never be sold. ^^You can change some settings here freely.
   (
     "invite_player_to_faction_without_center",mnf_scale_picture,
 ##diplomacy start+ fix gender of pronouns
-    "You receive an offer of vassalage!^^\
- {s8} of {s9} has sent a royal herald to bring you an invititation in {reg4?her:his} own hand.\
- You would be granted the honour of becoming a vassal {lord/lady} of {s9},\
- and in return {s8} asks you to swear an oath of homage to {reg4?her:him} and fight in {reg4?her:his} military campaigns,\
- although {reg4?she:he} offers you no lands or titles.\
- {reg4?She:He} will surely be offended if you do not take the offer...",
+    "You receive an offer of vassalage!^^ "+
+ "{s8} of {s9} has sent a royal herald to bring you an invititation in {reg4?her:his} own hand. "+
+ "You would be granted the honour of becoming a vassal {lord/lady} of {s9}, "+
+ "and in return {s8} asks you to swear an oath of homage to {reg4?her:him} and fight in {reg4?her:his} military campaigns, "+
+ "although {reg4?she:he} offers you no lands or titles. "+
+ "{reg4?She:He} will surely be offended if you do not take the offer...",
 ##diplomacy end+
     "none",
     [
@@ -18891,12 +18953,12 @@ goods, and books will never be sold. ^^You can change some settings here freely.
   (
     "invite_player_to_faction",mnf_scale_picture,
 ##diplomacy start+ fix gender of pronouns
-    "You receive an offer of vassalage!^^\
- {s8} of {s9} has sent a royal herald to bring you an invititation in {reg4?her:his} own hand.\
- You would be granted the honour of becoming a vassal {lord/lady} of {s9},\
- and in return {s8} asks you to swear an oath of homage to {reg4?her:him} and fight in {reg4?her:his} military campaigns,\
- offering you the fief of {s2} for your loyal service.\
- {reg4?She:He} will surely be offended if you do not take the offer...",
+    "You receive an offer of vassalage!^^ "+
+ "{s8} of {s9} has sent a royal herald to bring you an invititation in {reg4?her:his} own hand. "+
+ "You would be granted the honour of becoming a vassal {lord/lady} of {s9}, "+
+ "and in return {s8} asks you to swear an oath of homage to {reg4?her:him} and fight in {reg4?her:his} military campaigns, "+
+ "offering you the fief of {s2} for your loyal service. "+
+ "{reg4?She:He} will surely be offended if you do not take the offer...",
 ##diplomacy end+
     "none",
     [
@@ -19172,7 +19234,7 @@ goods, and books will never be sold. ^^You can change some settings here freely.
 
   (
     "notification_player_faction_active",0,
-    "You now possess land in your name, without being tied to any kingdom. This makes you a monarch in your own right, with your court temporarily located at {s12}. However, the other kings will at first consider you a threat, for if any upstart warlord can grab a throne, then their own legitimacy is called into question.^^You may find it desirable at this time to pledge yourself to an existing kingdom. If you want to continue as a sovereign monarch, then your first priority should be to establish an independent right to rule. You can establish your right to rule through several means -- marrying into a high-born family, recruiting new lords, governing your lands, treating with other kings, or dispatching your companions on missions.^^At any rate, your first step should be to appoint a chief minister from among your companions, to handle affairs of state. Different companions have different capabilities.^You may appoint new ministers from time to time. You may also change the location of your court, by speaking to the minister.",
+    "{s10}.",
     "none",
     [
       (set_fixed_point_multiplier, 100),
@@ -19180,6 +19242,12 @@ goods, and books will never be sold. ^^You can change some settings here freely.
       (position_set_y, pos0, 30),
       (position_set_z, pos0, 170),
       (set_game_menu_tableau_mesh, "tableau_faction_note_mesh_banner", "fac_player_supporters_faction", pos0),
+
+          (set_fixed_point_multiplier, 100),
+          (position_set_x, pos0, 70),
+          (position_set_y, pos0, 5),
+          (position_set_z, pos0, 75),
+          (set_game_menu_tableau_mesh, "tableau_troop_note_mesh", "trp_player", pos0),
 
       (unlock_achievement, ACHIEVEMENT_CALRADIAN_TEA_PARTY),
       (play_track, "track_coronation"),
@@ -19229,7 +19297,13 @@ goods, and books will never be sold. ^^You can change some settings here freely.
 
 		(str_store_party_name, s12, "$g_player_court"),
 	  (try_end),
-
+(try_begin),
+(gt, "$g_king_start",0),
+(str_store_faction_name, s12, "$players_kingdom"),
+(str_store_string, s10, "@You are the ruler of {s12}. ^^Your first step should be to appoint a chief minister to handle affairs of state. You may also change the location of your court, by speaking to the minister."),
+(else_try),
+(str_store_string, s10, "@You now possess land in your name, without being tied to any kingdom. This makes you a monarch in your own right, with your court temporarily located at {s12}. However, the other kings will at first consider you a threat, for if any upstart warlord can grab a throne, then their own legitimacy is called into question. ^^You may find it desirable at this time to pledge yourself to an existing kingdom. If you want to continue as a sovereign monarch, then your first priority should be to establish an independent right to rule. You can establish your right to rule through several means -- marrying into a high-born family, recruiting new lords, governing your lands, treating with other kings, or dispatching your companions on missions. ^^At any rate, your first step should be to appoint a chief minister from among your companions, to handle affairs of state. Different companions have different capabilities.^You may appoint new ministers from time to time. You may also change the location of your court, by speaking to the minister."),
+(try_end),
       ],
     [
 	  ##diplomacy start+
@@ -19847,20 +19921,58 @@ goods, and books will never be sold. ^^You can change some settings here freely.
 
   (
     "notification_faction_defeated",0,
-    "Faction Eliminated^^{s1} is no more!",
+    "Faction Eliminated^^{s10}",
     "none",
     [
-      (str_store_faction_name, s1, "$g_notification_menu_var1"),
-      (set_fixed_point_multiplier, 100),
-      (position_set_x, pos0, 65),
-      (position_set_y, pos0, 30),
-      (position_set_z, pos0, 170),
-      # (try_begin),
-      #   (is_between, "$g_notification_menu_var1", npc_kingdoms_begin, kingdoms_end), #Excluding player kingdom
-      #   (set_game_menu_tableau_mesh, "tableau_faction_note_mesh_for_menu", "$g_notification_menu_var1", pos0),
-      # (else_try),
-        (set_game_menu_tableau_mesh, "tableau_faction_note_mesh_banner", "$g_notification_menu_var1", pos0),
-      # (try_end),
+	(str_store_faction_name, s1, "$g_notification_menu_var1"),
+	(set_fixed_point_multiplier, 100),
+	(position_set_x, pos0, 65),
+	(position_set_y, pos0, 30),
+	(position_set_z, pos0, 170),
+	(set_game_menu_tableau_mesh, "tableau_faction_note_mesh_banner", "$g_notification_menu_var1", pos0),
+    		(try_begin),
+        	(faction_get_slot, ":faction_leader", "$g_notification_menu_var1", slot_faction_leader),
+        	(gt, ":faction_leader", 0),
+        	(set_fixed_point_multiplier, 100),
+        	(position_set_x, pos0, 70),
+        	(position_set_y, pos0, 5),
+        	(position_set_z, pos0, 75),
+        	(set_game_menu_tableau_mesh, "tableau_troop_note_mesh", ":faction_leader", pos0),
+    		(try_end),
+(try_begin),
+(this_or_next|eq, "$g_notification_menu_var1", "fac_kingdom_1"),
+(this_or_next|eq, "$g_notification_menu_var1", "fac_kingdom_2"),
+(eq, "$g_notification_menu_var1", "fac_kingdom_6"),
+(str_store_string, s10, "@{s1} is no more. The proud empire that once shaped the world now survives only in the pages of scholars and the whispers of time."),
+(else_try),
+(this_or_next|eq, "$g_notification_menu_var1", "fac_rebel_kingdom_1"),
+(this_or_next|eq, "$g_notification_menu_var1", "fac_rebel_kingdom_2"),
+(eq, "$g_notification_menu_var1", "fac_rebel_kingdom_3"),
+(str_store_string, s10, "@Thus ends the rising of {s1}. Yet rebellion, once kindled, sleeps lightly in the hearts of men."),
+(else_try),
+(eq, "$g_notification_menu_var1", "fac_kingdom_28"), #arran
+(str_store_string, s10, "@{s1} has been subdued. Order is restored, the memory of revolt remains."),
+(else_try),
+(eq, "$g_notification_menu_var1", "fac_kingdom_23"),
+(str_store_string, s10, "@With the fall of the {s1}, another chapter of history closes. Future generations shall speak of them not with pity, but with awe."),
+(else_try),
+(eq, "$g_notification_menu_var1", "fac_kingdom_3"),
+(str_store_string, s10, "@{s1} has been annihilated. Its armies crushed, its ruling dynasty overthrown, and its lands absorbed by conquering powers, the realm that once dominated Hispania is no more. Nobles flee, cities fall, and the memory of its kings fades into history. The Visigoth legacy survives only in fragments, as a new era rises from the ruins of the old."),
+(else_try),
+(eq, "$g_notification_menu_var1", "fac_kingdom_15"),
+(str_store_string, s10, "@{s1} has fallen. Its armies and fleets shattered, its cities seized, and its rulers defeated, the kingdom that once ruled across North Africa and the Mediterranean vanishes from the map. Survivors scatter, treasures are lost, and the legacy of the Vandals crumbles into history, leaving only echoes of their former might."),
+(else_try),
+(eq, "$g_notification_menu_var1", "fac_kingdom_5"),
+(str_store_string, s10, "@{s1} is no more. Its warriors defeated and its lands conquered, the fierce tribes of the north vanish from history. Stone fortresses lie abandoned, sacred symbols fade, and the memory of a proud and mysterious people survives only in legend, swallowed by the march of time and the rise of new powers."),
+(else_try),
+(eq, "$g_notification_menu_var1", "fac_kingdom_10"),
+(str_store_string, s10, "@With the fall of {s1}, another chapter of history closes. Their settlements are absorbed by conquering powers, and the memory of their fierce resistance fades into history, leaving only echoes of a people who once challenged empires."),
+(else_try),
+(eq, "$g_notification_menu_var1", "fac_kingdom_16"),
+(str_store_string, s10, "@{s1} has been defeated by its enemies. Its kings dethroned, its cities ravaged, and its lands seized by conquering powers, the realm that once stood as a bastion of culture and faith is no more."),
+(else_try),
+(str_store_string, s10, "@The fate of {s1} is sealed. Though their people are scattered and their power broken, their legacy will live on in memory and myth."),
+(try_end),
       ],
     [
       ("continue",[],"Continue...",
@@ -20076,6 +20188,15 @@ goods, and books will never be sold. ^^You can change some settings here freely.
       (assign, ":lady_no", "$g_notification_menu_var1"),
       (assign, ":center_no", "$g_notification_menu_var2"),
 
+	(try_begin),
+          (is_between, ":lady_no", heroes_begin, heroes_end),
+          (set_fixed_point_multiplier, 100),
+          (position_set_x, pos0, 70),
+          (position_set_y, pos0, 5),
+          (position_set_z, pos0, 75),
+          (set_game_menu_tableau_mesh, "tableau_troop_note_mesh", ":lady_no", pos0),
+	(try_end),
+
       (str_store_troop_name, s15, ":lady_no"),
       (str_store_party_name, s10, ":center_no"),
 
@@ -20180,6 +20301,15 @@ goods, and books will never be sold. ^^You can change some settings here freely.
     "{s12}",
     "none",
     [
+
+	(try_begin),
+          (is_between, "$love_interest_in_town", heroes_begin, heroes_end),
+          (set_fixed_point_multiplier, 100),
+          (position_set_x, pos0, 70),
+          (position_set_y, pos0, 5),
+          (position_set_z, pos0, 75),
+          (set_game_menu_tableau_mesh, "tableau_troop_note_mesh", "$love_interest_in_town", pos0),
+	(try_end),
 
     (call_script, "script_get_kingdom_lady_social_determinants", "$love_interest_in_town"),
 	(assign, ":guardian_lord", reg0),
@@ -20363,6 +20493,7 @@ goods, and books will never be sold. ^^You can change some settings here freely.
 
         #SB : set pictures
         (try_begin),
+          (this_or_next|eq, ":bandit_type", "trp_persian_bandit"),
           (eq, ":bandit_type", "trp_desert_bandit"),
           (str_store_string, s5, "str_bandit_approach_defile"),
         (else_try),
@@ -20370,6 +20501,8 @@ goods, and books will never be sold. ^^You can change some settings here freely.
           (str_store_string, s5, "str_bandit_approach_cliffs"),
           (set_background_mesh, "mesh_pic_mountain_bandits"),
         (else_try),
+          (this_or_next|eq, ":bandit_type", "trp_bandit"),
+          (this_or_next|eq, ":bandit_type", "trp_brigand"),
           (eq, ":bandit_type", "trp_forest_bandit"),
           (str_store_string, s5, "str_bandit_approach_swamp"),
           (set_background_mesh, "mesh_pic_forest_bandits"),
@@ -20481,6 +20614,14 @@ goods, and books will never be sold. ^^You can change some settings here freely.
           (eq, ":template", "pt_arab_bandit_lair"),
           (assign, ":bandit_troop", "trp_arab_bandit"),
           (assign, ":scene_to_use", "scn_lair_arab_bandits"),
+        (else_try),
+          (eq, ":template", "pt_persian_bandit_lair"),
+          (assign, ":bandit_troop", "trp_persian_bandit"),
+          (assign, ":scene_to_use", "scn_lair_arab_bandits"),
+        (else_try),
+          (eq, ":template", "pt_roman_bandit_lair"),
+          (assign, ":bandit_troop", "trp_bandit"),
+          (assign, ":scene_to_use", "scn_lair_forest_bandits"),
         (else_try),
           (eq, ":template", "pt_looter_lair"),
           (assign, ":bandit_troop", "trp_looter"),
@@ -21639,7 +21780,14 @@ goods, and books will never be sold. ^^You can change some settings here freely.
                 (call_script, "script_diplomacy_start_war_between_kingdoms", "$g_notification_menu_var1", "$g_notification_menu_var2", 0),
             (try_end),
         (else_try),
-            (jump_to_menu, "mnu_notification_casus_belli_expired"),
+		(try_begin),
+		(this_or_next|eq, "$g_notification_menu_var1", "$players_kingdom"), #madsci only jump to the menu if one of these is the players kingdom
+		(eq, "$g_notification_menu_var2", "$players_kingdom"),
+            	(jump_to_menu, "mnu_notification_casus_belli_expired"),
+		(else_try),
+		(call_script, "script_faction_follows_controversial_policy", "$g_notification_menu_var1", logent_policy_ruler_ignores_provocation),
+		(jump_to_menu, "mnu_auto_return_to_map"),
+		(try_end),
         (try_end),
 
         (str_store_string, s4, ":explain_string"),
@@ -24379,9 +24527,11 @@ goods, and books will never be sold. ^^You can change some settings here freely.
       (eq, "$g_encountered_party_template", "pt_sea_raiders"),
       (set_background_mesh, "mesh_pic_sea_raiders"),
     (else_try),
+      (this_or_next|eq, "$g_encountered_party_template", "pt_roman_bandits"),
       (eq, "$g_encountered_party_template", "pt_forest_bandits"),
       (set_background_mesh, "mesh_pic_forest_bandits"),
     (else_try),
+      (this_or_next|eq, "$g_encountered_party_template", "pt_persian_bandits"),
       (this_or_next|eq, "$g_encountered_party_template", "pt_deserters"),
       (eq, "$g_encountered_party_template", "pt_routed_warriors"),
       (set_background_mesh, "mesh_pic_deserters"),
@@ -25229,6 +25379,12 @@ goods, and books will never be sold. ^^You can change some settings here freely.
     (store_faction_of_party, ":fac", "$g_encountered_party"),
     (str_store_faction_name, s51, ":fac"),
 
+	(set_fixed_point_multiplier, 100),
+	(position_set_x, pos0, 65),
+	(position_set_y, pos0, 30),
+	(position_set_z, pos0, 170),
+	(set_game_menu_tableau_mesh, "tableau_faction_note_mesh_banner_religion", ":fac", pos0), #madsci show faction banner
+
     (str_clear, s52),
     (try_begin),
         (store_relation, ":faction_relation", ":fac", "fac_player_supporters_faction"),
@@ -25475,6 +25631,12 @@ goods, and books will never be sold. ^^You can change some settings here freely.
     (str_store_party_name, s50, "$g_encountered_party"),
     (store_faction_of_party, ":fac", "$g_encountered_party"),
     (str_store_faction_name, s51, ":fac"),
+
+	(set_fixed_point_multiplier, 100),
+	(position_set_x, pos0, 65),
+	(position_set_y, pos0, 30),
+	(position_set_z, pos0, 170),
+	(set_game_menu_tableau_mesh, "tableau_faction_note_mesh_banner_religion", ":fac", pos0), #madsci show faction banner
 
     (str_clear, s52),
     (try_begin),
@@ -27831,14 +27993,17 @@ goods, and books will never be sold. ^^You can change some settings here freely.
 
 #masci failsafes needed, otherwise the game will spawn clones of the player
 (try_begin),
+(this_or_next|eq, ":fac", "fac_indigenoi"),
 (le, ":troop_1", 0),
 (assign, ":troop_1", "trp_manhunter"),
 (try_end),
 (try_begin),
+(this_or_next|eq, ":fac", "fac_indigenoi"),
 (le, ":troop_2", 0),
 (assign, ":troop_2", "trp_manhunter"),
 (try_end),
 (try_begin),
+(this_or_next|eq, ":fac", "fac_indigenoi"),
 (le, ":troop_3", 0),
 (assign, ":troop_3", "trp_manhunter"),
 (try_end),
@@ -28053,14 +28218,17 @@ goods, and books will never be sold. ^^You can change some settings here freely.
 
 #masci failsafes needed, otherwise the game will spawn clones of the player
 (try_begin),
+(this_or_next|eq, ":fac", "fac_indigenoi"),
 (le, ":troop_1", 0),
 (assign, ":troop_1", "trp_manhunter"),
 (try_end),
 (try_begin),
+(this_or_next|eq, ":fac", "fac_indigenoi"),
 (le, ":troop_2", 0),
 (assign, ":troop_2", "trp_manhunter"),
 (try_end),
 (try_begin),
+(this_or_next|eq, ":fac", "fac_indigenoi"),
 (le, ":troop_3", 0),
 (assign, ":troop_3", "trp_manhunter"),
 (try_end),
@@ -31513,7 +31681,31 @@ goods, and books will never be sold. ^^You can change some settings here freely.
     ],
     [
         ("upgrade_path_1",[
-            (troop_get_upgrade_troop, ":path_1_troop", "$player_cur_troop", 0),
+	(try_begin), #madsci
+	(troop_get_upgrade_troop, ":upgrade_troop", "$player_cur_troop", 0),
+	(gt, ":upgrade_troop", 0),
+	(else_try),
+	(faction_get_slot, ":upgrade_troop", "$enlisted_faction", slot_faction_tier_4_troop),
+	(faction_get_slot, ":tier5", "$enlisted_faction", slot_faction_tier_5_troop),
+	(neq, "$player_cur_troop", ":tier5"), #dont downgrade
+	(gt, ":upgrade_troop", 0),
+	(neq, "$player_cur_troop", ":upgrade_troop"),
+	(neg|troop_is_mounted, "$player_cur_troop"),
+	(neg|troop_is_mounted, ":upgrade_troop"),
+	(else_try),
+	(faction_get_slot, ":upgrade_troop", "$enlisted_faction", slot_faction_tier_5_troop),
+	(gt, ":upgrade_troop", 0),
+	(neq, "$player_cur_troop", ":upgrade_troop"),
+	(troop_is_mounted, "$player_cur_troop"),
+	(troop_is_mounted, ":upgrade_troop"),
+	(else_try),
+	(eq, "$player_cur_troop", "trp_pedes"),
+	(assign, ":upgrade_troop", "trp_centenarius"),
+	(else_try),
+	(troop_get_upgrade_troop, ":upgrade_troop", "$player_cur_troop", 0),
+	(try_end),
+	(assign, ":path_1_troop", ":upgrade_troop"),
+            #(troop_get_upgrade_troop, ":path_1_troop", "$player_cur_troop", 0),
             (ge, ":path_1_troop", 0),
       (assign, reg1, 1),
       (try_begin),
@@ -31525,7 +31717,31 @@ goods, and books will never be sold. ^^You can change some settings here freely.
             (str_store_troop_name, s66, ":path_1_troop"),],
         "{s66}{s0}.",[
             (call_script, "script_freelancer_unequip_troop", "$player_cur_troop"),
-      (troop_get_upgrade_troop, "$player_cur_troop", "$player_cur_troop", 0),
+	(try_begin), #madsci
+	(troop_get_upgrade_troop, ":upgrade_troop", "$player_cur_troop", 0),
+	(gt, ":upgrade_troop", 0),
+	(else_try),
+	(faction_get_slot, ":upgrade_troop", "$enlisted_faction", slot_faction_tier_4_troop),
+	(faction_get_slot, ":tier5", "$enlisted_faction", slot_faction_tier_5_troop),
+	(neq, "$player_cur_troop", ":tier5"), #dont downgrade
+	(gt, ":upgrade_troop", 0),
+	(neq, "$player_cur_troop", ":upgrade_troop"),
+	(neg|troop_is_mounted, "$player_cur_troop"),
+	(neg|troop_is_mounted, ":upgrade_troop"),
+	(else_try),
+	(faction_get_slot, ":upgrade_troop", "$enlisted_faction", slot_faction_tier_5_troop),
+	(gt, ":upgrade_troop", 0),
+	(neq, "$player_cur_troop", ":upgrade_troop"),
+	(troop_is_mounted, "$player_cur_troop"),
+	(troop_is_mounted, ":upgrade_troop"),
+	(else_try),
+	(eq, "$player_cur_troop", "trp_pedes"),
+	(assign, ":upgrade_troop", "trp_centenarius"),
+	(else_try),
+	(troop_get_upgrade_troop, ":upgrade_troop", "$player_cur_troop", 0),
+	(try_end),
+	(assign, "$player_cur_troop", ":upgrade_troop"),
+      #(troop_get_upgrade_troop, "$player_cur_troop", "$player_cur_troop", 0),
       (store_troop_faction, ":commander_faction", "$enlisted_lord"),
       (faction_set_slot, ":commander_faction", slot_faction_freelancer_troop, "$player_cur_troop"),
       (call_script, "script_freelancer_equip_troop", "$player_cur_troop"),
@@ -31545,6 +31761,7 @@ goods, and books will never be sold. ^^You can change some settings here freely.
             (change_screen_map),]),
 
         ("upgrade_path_2",[
+	(eq, 1, 0), #madsci we dont need this in this system
             (troop_get_upgrade_troop, ":path_2_troop", "$player_cur_troop", 1),
             (ge, ":path_2_troop", 1),
       (assign, reg2, 1),
@@ -33159,7 +33376,7 @@ goods, and books will never be sold. ^^You can change some settings here freely.
 (eq,"$cheat_mode",1),
 ],"{!}Cheat: Walk around the test scene.",
        [(set_jump_mission,"mt_ai_training"),
-        (jump_to_scene, "scn_haddingrs_aesti_trade_post"),
+        (jump_to_scene, "scn_maxi_roman_villa"),
         (change_screen_mission),
         ]
        ),
@@ -35041,8 +35258,7 @@ goods, and books will never be sold. ^^You can change some settings here freely.
   ]),
 ]),
 
-  (
-    "majorian_death",mnf_disable_all_keys|mnf_scale_picture,
+  ("majorian_death",mnf_disable_all_keys|mnf_scale_picture,
     "{s10} has died! ^^While the official cause of death is dysentery, rumour has it that the emperor was actually murdered... ^^{s11} has quickly seized power in {s12}, and riots have erupted in major cities across the empire.",
     "none",
     [
@@ -35054,6 +35270,44 @@ goods, and books will never be sold. ^^You can change some settings here freely.
 (str_store_troop_name, s10, "trp_kingdom_1_lord"),
 (str_store_troop_name, s11, "trp_knight_1_1"),
 (str_store_faction_name, s12, "fac_kingdom_1"),
+],
+    [
+      ("continue",[],"Continue...",[
+(jump_to_menu, "mnu_auto_return_to_map"),
+]),
+    ],
+  ),
+
+("barbarian_attacks",mnf_disable_all_keys|mnf_scale_picture,
+    "Trouble in the West! ^^The empire trembles on the edge of chaos. {s11} feels the weight of history on his shoulders, as centuries of Roman authority falter before the relentless tide of barbarian ambition.",
+    "none",
+    [
+(set_fixed_point_multiplier, 100),
+(position_set_x, pos0, 70),
+(position_set_y, pos0, 5),
+(position_set_z, pos0, 75),
+(faction_get_slot, ":faction_1_leader", "fac_kingdom_1", slot_faction_leader),
+(set_game_menu_tableau_mesh, "tableau_troop_note_mesh", ":faction_1_leader", pos0),
+(str_store_troop_name_link, s11, ":faction_1_leader"),
+],
+    [
+      ("continue",[],"Continue...",[
+(jump_to_menu, "mnu_auto_return_to_map"),
+]),
+    ],
+  ),
+
+("barbarian_attacks_ere",mnf_disable_all_keys|mnf_scale_picture,
+    "Trouble in the East! ^^As {s11} consolidates his rule, whispers of instability spread beyond the Empire's borders and its enemies grow bold. Sensing weakness, they seize the moment, launching their own offensives in hopes of gaining land, tribute, or glory. Pressure mounts along the frontiers as the Empire is forced to respond on multiple fronts, proving whether Leo's rule can withstand a sudden surge of external threats.",
+    "none",
+    [
+(set_fixed_point_multiplier, 100),
+(position_set_x, pos0, 70),
+(position_set_y, pos0, 5),
+(position_set_z, pos0, 75),
+(faction_get_slot, ":faction_1_leader", "fac_kingdom_2", slot_faction_leader),
+(set_game_menu_tableau_mesh, "tableau_troop_note_mesh", ":faction_1_leader", pos0),
+(str_store_troop_name_link, s11, ":faction_1_leader"),
 ],
     [
       ("continue",[],"Continue...",[

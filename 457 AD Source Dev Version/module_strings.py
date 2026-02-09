@@ -2766,7 +2766,7 @@ strings = [
   ("rhodok_rebellion_pretender_story_3",   "Well, Graveth defeated the Swadians, and for that, as a Rhodok, I am grateful. When I am king, I will myself place the wreath of victory on his head. But after that I will have it separated from his shoulders, for by his actions he has shown himself a traitor to the Rhodok confederacy and its sacred custom."),
   ("sarranid_rebellion_pretender_story_3", "My brother is known to be unjust and a tyrant among the nobles. Not only do I have the support of the power Mihran family, but I also have the support of the Hephthalite king. But most important, I have the support of the people who do not wish to be ruled by an unjust tyrant. All I need is someone to help me take the throne."),
 
-  ("swadian_rebellion_monarch_response_1", "Libius Severus believes he should be emperor?. He is right that I was placed into power by the military, but it was after I won a victory against the invading Alemmani, in which I initially refused."),
+  ("swadian_rebellion_monarch_response_1", "Libius Severus believes he should be emperor?. He is right that I was placed into power by the military, but it was after I won a victory against the invading Alamanni, in which I initially refused."),
   ("vaegir_rebellion_monarch_response_1",  "Ah, Iulius Patricius, son of my most influential general and rival, Aspar... It is true that I was placed on the throne by Aspar, just as the previous emperor, Marcian was."),
   ("khergit_rebellion_monarch_response_1", "My brother Euric has perhaps told you of his insistence upon taking the throne from me, and accuses me of patricide. As if he would not be a hypocrite himself for killing me! I killed Thorismund for he violated our treaties with the Romans, who we are loyal allies for! Our father died fighting along side the Romans against those Hunnic beasts, and to think we should violate our alliances?"),
   ("nord_rebellion_monarch_response_1",    "Odoin? Bastard, is more like it. Perhaps you have heard the expression, 'Unhappy is the land whose king is a child.' Unhappy too is the land whose king is a student. You want the Goths to be ruled by a beardless youth, whose hand bears no callouses left by a sword's grip, who has never stood in a shield wall? If Odoin were king, his retainers would laugh at him to his face!"),
@@ -3350,7 +3350,7 @@ We apologize sincerely if you contributed your suggestions and feedback but were
   ("s21__the_s5_is_bound_by_truce_not_to_attack_the_s14s18_the_truce_will_expire_in_reg1_days", "{s21}^* The {s5} is bound by truce not to attack the {s14}.{s18} The truce will expire in {reg1} days."),
   ("s21__the_s5_has_recently_suffered_provocation_by_subjects_of_the_s14_and_there_is_a_risk_of_war", "{s21}^* The {s5} has recently suffered provocation by subjects of the {s14}, and there is a risk of war."),
   # ("s21__the_s5_has_no_outstanding_issues_with_the_s14", "{s21}^* The {s5} has no outstanding issues with the {s14}."),
-  ("s21_the_s14_was_recently_provoked_by_subjects_of_the_s5_and_there_is_a_risk_of_war_", "{s21} The {s14} was recently provoked by subjects of the {s5}, and there is a risk of war.^"),
+  ("s21_the_s14_was_recently_provoked_by_subjects_of_the_s5_and_there_is_a_risk_of_war_", "{s21}^*  The {s14} was recently provoked by subjects of the {s5}, and there is a risk of war.^"),
   ("s21_cheat_mode_assessment_s14_", "{!}{s21}^CHEAT MODE ASSESSMENT: {s14}^"),
   #("the_s5_is_ruled_by_s6_it_occupies_s8_its_vassals_are_s10__s21", "The {s5} is ruled by {s6}.^It occupies {s8}.^Its vassals are {s10}.^^{s21}"),
   ("the_s5_is_ruled_by_s6_it_occupies_s8_its_vassals_are_s10__s21", "The {s5} is ruled by {s6} ^It occupies {s8}.^Its vassals are {s10}.^^{s21}"),
@@ -4577,6 +4577,7 @@ We apologize sincerely if you contributed your suggestions and feedback but were
   ("faction_title_male_32", "Tovisaci {s0}"),
   ("faction_title_male_33", "Chief {s0}"),
   ("faction_title_male_34", "Chief {s0}"),
+  ("faction_title_male_35", "{s0}"),
   ("faction_title_male_rebel_1", "Dominus {s0}"),
   ("faction_title_male_rebel_2", "Dominus {s0}"),
   ("faction_title_male_rebel_3", "Dominus {s0}"),
@@ -4616,6 +4617,7 @@ We apologize sincerely if you contributed your suggestions and feedback but were
   ("faction_title_female_32", "{s0}"),
   ("faction_title_female_33", "{s0}"),
   ("faction_title_female_34", "{s0}"),
+  ("faction_title_female_35", "{s0}"),
   ("faction_title_female_rebel_1", "{s0}"),
   ("faction_title_female_rebel_2", "{s0}"),
   ("faction_title_female_rebel_3", "{s0}"),
@@ -4744,7 +4746,7 @@ We apologize sincerely if you contributed your suggestions and feedback but were
   ("quick_battle_scene_4", "Haima Castle"),
   ("quick_battle_scene_5", "Ulbas Castle"),
 
-  ("quick_battle_troop_1", "Majorian's career in the Roman military starting following the great Roman General, Aetius. Majorian distinguished himself in the defense of Turonensis, and in the a battle against the Franks in 448. Majorian would continue to interact with the military and Roman politics, until 457, where after a battle against invading Alemmani by Lake Maggiore, he was proclaimed emperor. Majorian would continue to lead conquests retaking land in Gaul in hispania, until the destrution of his fleet and eventual murder by Ricimer in 461."),
+  ("quick_battle_troop_1", "Majorian's career in the Roman military starting following the great Roman General, Aetius. Majorian distinguished himself in the defense of Turonensis, and in the a battle against the Franks in 448. Majorian would continue to interact with the military and Roman politics, until 457, where after a battle against invading Alamanni by Lake Maggiore, he was proclaimed emperor. Majorian would continue to lead conquests retaking land in Gaul in hispania, until the destrution of his fleet and eventual murder by Ricimer in 461."),
   ("quick_battle_troop_2", "King of the Gepids, Ardaric was one of Attila's most closest and loyal vassals. However, after Attila's death Ardaric would rebel against Attila's sons, defeating them at the Battle of Nedao in 454, securing independence of the Gepids and founding a kingdom in Dacia."),
   ("quick_battle_troop_3", "A man born to shake the world, and make many powerful men fall at his knees. Hailing from the Pontic Caspian Steppes, the Huns reached the Black Sea and from there launched several campaigns against the Alans, Goths (which they quickly subjugated) and then, especially with Attila, against the Roman Empire. Attila was the son of Rua and is widely remembered as one of the greatest foes that threatened the very existence of the Roman Empire, sich as Hannibal centuries before."),
   ("quick_battle_troop_4", "One of the most powerful men of the Western Roman Empire, he was of Vandal lineage by father and Roman by mother. Regarded as one of the pillars of the Western Roman Empire during the first years of the fifth century, Stilicho is indeed one of the greatest generals of the dominate. Not only he, de facto, ruled the Western Empire after the death of Theodosis I, but he managed to defeat the Visigoths of Alaric and the Ostrogoths of Radagaisus several times during his career."),
@@ -6769,7 +6771,7 @@ Even in the last case, the player can make formations up to four lines by orderi
 ("face_culture_jewish", "000000003010c10745622fef5a84c6e800000000001e38ea0000000000000000"),
 ("face_culture_irish", "000000000b10614a36db6db6db6db6db00000000001db6db0000000000000000"),
 ("face_culture_slavic", "000000001e0c244a3daa8c987489496400000000000193390000000000000000"),
-("face_culture_finnic", "000000000a10050846546dc695cdcafc00000000001e346b0000000000000000"),
+("face_culture_finnic", "000000001e0c244a3daa8c987489496400000000000193390000000000000000"),
 
 ("face_culture_gothic_female", "00000000340c0005449a6b372d791d2300000000000db8920000000000000000"),
 ("face_culture_eastgermanic_female", "00000000230c300b5b5669bb1472392400000000000d42cb0000000000000000"),
@@ -6789,6 +6791,7 @@ Even in the last case, the player can make formations up to four lines by orderi
 ("face_culture_irish_female", "000000003204300b676b8e5a4cadbadc000000000011cb530000000000000000"),
 ("face_culture_slavic_female", "00000000340c0005449a6b372d791d2300000000000db8920000000000000000"),
 ("face_culture_finnic_female", "000000003204300b676b8e5a4cadbadc000000000011cb530000000000000000"),
+("face_culture_finnic_female", "00000000230c300b5b5669bb1472392400000000000d42cb0000000000000000"),
 
 ("culture_gothic","You_are_a_Goth._Your_people_are_scions_of_Berig,_the_warrior-king_who_led_your_forefathers_from_their_ancestral_homes_in_Scandza._They_travelled_far,_through_the_dark_forests_and_swamps_of_eastern_Europa,_across_mountains_and_wide_rivers,_in_search_of_new_lands_to_settle._When_the_Huns_came,_some_fled_while_others_fought._Now,_to_east_and_west,_they_carve_out_kingdoms_by_their_strength_and_courage."),
 ("culture_eastgermanic","You_are_a_German_of_the_east._Long_your_ancestors_roamed_the_forests_and_steppes_of_Germania_Scythica,_hard,_cruel_lands_that_breed_stern,_doughty_folk._In_recent_times,_many_of_your_people_have_journeyed_south,_whether_in_search_of_wealth_and_warmer_climes,_or_fleeing_the_terror_from_the_east."),
@@ -6806,8 +6809,8 @@ Even in the last case, the player can make formations up to four lines by orderi
 ("culture_armenian","You_are_an_Armenian._Your_people_are_the_descendants_of_the_ancient_kingdoms_of_Urartu_and_Armenia,_a_proud_nation_that_has_stood_at_the_crossroads_of_empires._Once_ruled_by_the_mighty_Arsacid_dynasty,_Armenia_was_divided_between_the_Eastern_Roman_and_Sasanian_Empires._Now,_as_a_vassal_of_the_Sasanians,_your_people_cling_to_their_Christian_faith,_which_was_first_adopted_in_301_AD,_and_to_their_unique_identity._Despite_persecution_and_geopolitical_turmoil,_Armenia_remains_a_land_of_fierce_warriors,_wise_clergy,_and_resilient_families._You_live_in_a_time_when_the_memories_of_Vardan_Mamikonian's_sacrifice_at_Avarayr_inspire_your_people_to_stand_strong_against_any_oppression."),
 ("culture_jew","You_are_a_Jew._Your_people_are_the_descendants_of_the_ancient_Israelites,_whose_kingdoms_of_Israel_and_Judah_once_flourished_in_the_hills_and_plains_of_the_Holy_Land._Centuries_of_exile,_displacement,_and_empires_have_scattered_your_community_across_the_Mediterranean,_but_their_identity_remains_unshaken._In_Palaestina,_your_people_suffer_under_Roman_rule,_facing_restrictions_and_persecutions._Despite_this,_your_tradition_endures_through_prayer,_study,_and a_tenacious_hope_for_redemption_and_freedom."),
 ("culture_irish","You_are_an_Irish._Since_the_world_was_made,_your_people_have_ruled_the_chill,_beautiful_island_of_Eriu._Wild_and_free,_you_look_with_contempt_on_your_weak_eastern_neighbours_who_tremble_behind_their_great_walls_and_towers_of_stone,_which_now_stand_abandoned_and_silent."),
-("culture_slavic","You_are_Slavic._Your_people_who_live_beyond_the_northern_Danube_in_the_dense_forests_and_cold_plains,_are_a_free_and_unruly_folk."),
-("culture_finnic","You_are_Finno-Ugrian._The_spirits_and_gods_of_the_North_look_kindly_on_your_ancestors,_for_that_there_is_always_enough_for_&_food_for_them_to_make_it_through_another_winter."),
+("culture_slavic","You are Slavic. Your people who live beyond the northern Danube in the dense forests and cold plains, are a free and unruly folk."),
+("culture_finnic","You are Finnic. The spirits and gods of the North look kindly on your ancestors, for that there is always enough food for them to make it through another winter."),
 
 ("background_slave","Your_parents_were_slaves_and_thus_you_were_born._Your_life_has_been_one_of_hardship_and_suffering._As_a_child,_you_watched_your_family_cruelly_punished_by_the_master_for_any_small_mistake_or_perceived_offense._Nor_did_you_receive_mercy_because_of_your_age._Your_parents_died_young,_as_slaves_usually_do._Determined_to_avoid_the_same_fate,_you_escaped,_leaving_the_place_far_behind."),
 ("background_freeman","Your_parents_were_freemen,_owners_of_a_smallholding_worked_by_serfs._As_soon_as_you_could_walk,_you_too_were_put_to_work._You_helped_gather_the_harvest,_fetched_water,_fed_the_animals._Though_life_could_be_hard,_it_was_happy:_you_played_and_fought_with_the_other_children,_made_fun_baiting_livestock_and_enjoyed_the_many_cultural_and_religious_festivities_of_your_people."),
@@ -7087,7 +7090,7 @@ Even in the last case, the player can make formations up to four lines by orderi
 
 ("desc_kingdom_9", "The Kingdom of Burgundy is a Germanic kingdom established within the collapsing Western Roman Empire. The Burgundians have transitioned from being a migratory tribe to rulers of a stable kingdom, blending Roman and Germanic traditions."),
 
-("desc_kingdom_10", "The Alemmani are a Germanic tribal confederation. They are primarily agrarian but also engage in raiding and warfare, which is central to their economy and society."),
+("desc_kingdom_10", "The Alamanni are a Germanic tribal confederation. They are primarily agrarian but also engage in raiding and warfare, which is central to their economy and society."),
 
 ("desc_kingdom_11", "The Gepids are a significant force in the post-Roman world, playing a key role in the shifting balance of power."),
 
@@ -7144,7 +7147,7 @@ Even in the last case, the player can make formations up to four lines by orderi
 
 ("desc_minor_dani", "The Dani are a Germanic tribe living in the islands of Denmark and southern Sweden."),
 
-("desc_minor_mordens", "The Mordens are a tribal union of uncertain origins."),
+#("desc_minor_mordens", "The Mordens are a tribal union of uncertain origins."),
 
 # ("desc_minor_sporoi", "Living in the forest-steppe area of Ukraine, the Sporoi (the many) live in their villages. Former subjects of the Goths, Sarmatians and Huns, they are now free from their yoke and about to change the cultural shape of Europe forever."),
 

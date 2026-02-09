@@ -7975,6 +7975,7 @@ presentations = [
 
         (assign, "$g_presentation_obj_banner_selection_1", 0),
         (try_for_range, ":cur_banner_mesh", banner_meshes_begin, ":try_end"),
+	(is_between, ":cur_banner_mesh", "mesh_banner_a01", "mesh_banner_kingdom_a"),
           (create_image_button_overlay, reg1, ":cur_banner_mesh", ":cur_banner_mesh"),
           (position_set_x, pos1, ":x_pos"),
           (position_set_y, pos1, ":y_pos"),
@@ -12517,6 +12518,11 @@ presentations = [
           ##diplomacy begin
           (neg|party_slot_eq, ":party_no", slot_village_infested_by_bandits, "trp_peasant_woman"),
           ##diplomacy end
+          (assign, ":garrison_troop", 1),
+	(else_try),
+         (eq, ":party_no", "p_diocletians_palace"), #madsci player needs to pay for troops stored here
+	(store_party_size_wo_prisoners, ":garrison", ":party_no"),
+	(gt, ":garrison", 0),
           (assign, ":garrison_troop", 1),
 		(else_try),
           (this_or_next|party_slot_eq, ":party_no", slot_party_type, spt_town),
@@ -17971,7 +17977,29 @@ presentations = [
     (troop_get_slot, ":service_xp_start", "trp_player", slot_troop_freelancer_start_xp),
         (troop_get_xp, ":service_xp_cur", "trp_player"),
         (val_sub, ":service_xp_cur", ":service_xp_start"),
-    (troop_get_upgrade_troop, ":upgrade_troop", "$player_cur_troop", 0),
+ 	(try_begin), #madsci
+	(troop_get_upgrade_troop, ":upgrade_troop", "$player_cur_troop", 0),
+	(gt, ":upgrade_troop", 0),
+	(else_try),
+	(faction_get_slot, ":upgrade_troop", "$enlisted_faction", slot_faction_tier_4_troop),
+	(faction_get_slot, ":tier5", "$enlisted_faction", slot_faction_tier_5_troop),
+	(neq, "$player_cur_troop", ":tier5"), #dont downgrade
+	(gt, ":upgrade_troop", 0),
+	(neq, "$player_cur_troop", ":upgrade_troop"),
+	(neg|troop_is_mounted, "$player_cur_troop"),
+	(neg|troop_is_mounted, ":upgrade_troop"),
+	(else_try),
+	(faction_get_slot, ":upgrade_troop", "$enlisted_faction", slot_faction_tier_5_troop),
+	(gt, ":upgrade_troop", 0),
+	(neq, "$player_cur_troop", ":upgrade_troop"),
+	(troop_is_mounted, "$player_cur_troop"),
+	(troop_is_mounted, ":upgrade_troop"),
+	(else_try),
+	(eq, "$player_cur_troop", "trp_pedes"),
+	(assign, ":upgrade_troop", "trp_centenarius"),
+	(else_try),
+	(troop_get_upgrade_troop, ":upgrade_troop", "$player_cur_troop", 0),
+	(try_end),
     (str_store_string, s1, "@N/A"),
     (try_begin),
       (gt, ":upgrade_troop", 1), #make sure troop is valid and not player troop
@@ -19044,6 +19072,7 @@ presentations = [
               (this_or_next|eq, "$current_town", "p_castle_29"),
               (this_or_next|eq, "$current_town", "p_castle_53"),
               (this_or_next|eq, "$current_town", "p_castle_55"),
+              (this_or_next|eq, "$current_town", "p_castle_116"),
               (this_or_next|eq, "$current_town", "p_castle_60"),
               (this_or_next|eq, "$current_town", "p_town_3"),
               (this_or_next|eq, "$current_town", "p_town_5"),
@@ -19103,6 +19132,7 @@ presentations = [
               (this_or_next|eq, "$current_town", "p_castle_40"),
               (this_or_next|eq, "$current_town", "p_town_17"),
               (this_or_next|eq, "$current_town", "p_town_33"),
+              (this_or_next|eq, "$current_town", "p_town_49"),
               (eq, "$current_town", "p_town_35"),
               (this_or_next|eq, ":troop", "trp_pedes_alani"),
               (this_or_next|eq, ":troop", "trp_eques_alani_leves"),
@@ -19184,6 +19214,7 @@ presentations = [
               (this_or_next|eq, "$current_town", "p_castle_2"),
               (this_or_next|eq, "$current_town", "p_castle_58"),
               (this_or_next|eq, "$current_town", "p_castle_74"),
+              (this_or_next|eq, "$current_town", "p_castle_119"),
               (eq, "$current_town", "p_town_24"),
               (eq, ":troop", "trp_abulci"),
               (assign, ":c", 1),
@@ -19967,9 +19998,9 @@ presentations = [
                 (eq, ":troop", "trp_slav_horseman"),
                 (assign, ":c", 1),
               (else_try),
-                (eq, ":culture", "fac_culture_21"), #slavic
+                (eq, ":culture", "fac_culture_21"), #phinnoi or mordovians
                 (this_or_next|eq, ":troop", "trp_phinnoi_warrior"), #t1
-                (this_or_next|eq, ":troop", "trp_phinnoi_hunter"), 
+                (this_or_next|eq, ":troop", "trp_phinnoi_hunter"), #t1
                 (eq, ":troop", "trp_phinnoi_horseman"),
                 (assign, ":c", 1),
               (else_try),
@@ -19994,12 +20025,12 @@ presentations = [
                 (this_or_next|eq, ":troop", "trp_hibero_roman_venator"), #t1
                 (eq, ":troop", "trp_hibero_roman_rusticus"),
                 (assign, ":c", 1),
-              (else_try), #phinnoi
-                (eq, ":culture", "fac_culture_minor_2"), #
-                (this_or_next|eq, ":troop", "trp_phinnoi_warrior"), #t1
-                (this_or_next|eq, ":troop", "trp_phinnoi_hunter"), #t1
-                (eq, ":troop", "trp_phinnoi_horseman"),
-                (assign, ":c", 1),
+              #(else_try), #phinnoi
+                #(eq, ":culture", "fac_culture_minor_2"), #
+                #(this_or_next|eq, ":troop", "trp_phinnoi_warrior"), #t1
+                #(this_or_next|eq, ":troop", "trp_phinnoi_hunter"), #t1
+                #(eq, ":troop", "trp_phinnoi_horseman"),
+                #(assign, ":c", 1),
               (else_try), #minor cultures
                 (eq, ":culture", "fac_culture_minor_3"), #copts
                 (this_or_next|eq, ":troop", "trp_coptic_youth"),
@@ -20279,6 +20310,12 @@ presentations = [
                     (this_or_next|eq, ":troop", "trp_slav_skirmisher"), #t1
                     (this_or_next|eq, ":troop", "trp_slav_footman"), 
                     (eq, ":troop", "trp_slav_horseman"),
+                    (assign, ":c", 1),
+                  (else_try),
+                    (eq, ":culture", "fac_culture_21"), #phinnoi or mordovians
+                    (this_or_next|eq, ":troop", "trp_phinnoi_warrior"), #t1
+                    (this_or_next|eq, ":troop", "trp_phinnoi_hunter"), #t1
+                    (eq, ":troop", "trp_phinnoi_horseman"),
                     (assign, ":c", 1),
                   (else_try),
                     (eq, ":culture", "fac_culture_empire"), #romans - this is where the fun begins!

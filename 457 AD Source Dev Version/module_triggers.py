@@ -950,12 +950,14 @@ triggers = [
   (party_set_slot, "p_town_25", slot_center_ex_faction, "fac_kingdom_1"), #WRE Claims emerita augusta
   (party_set_slot, "p_town_35", slot_center_ex_faction, "fac_kingdom_1"), #WRE Claims hippo
   (party_set_slot, "p_town_40", slot_center_ex_faction, "fac_kingdom_1"), #WRE Claims tarraco
+  (party_set_slot, "p_town_49", slot_center_ex_faction, "fac_kingdom_1"), #WRE Claims Leptis Magna
 
   (party_set_slot, "p_castle_4", slot_center_ex_faction, "fac_kingdom_1"),
   (party_set_slot, "p_castle_8", slot_center_ex_faction, "fac_kingdom_1"),
   (party_set_slot, "p_castle_22", slot_center_ex_faction, "fac_kingdom_1"),
   (party_set_slot, "p_castle_40", slot_center_ex_faction, "fac_kingdom_1"),
   (party_set_slot, "p_castle_55", slot_center_ex_faction, "fac_kingdom_1"),
+  (party_set_slot, "p_castle_116", slot_center_ex_faction, "fac_kingdom_1"),
 
 	(try_begin),
 	(faction_slot_eq, "fac_kingdom_3", slot_faction_state, sfs_active),
@@ -1182,6 +1184,7 @@ triggers = [
     (store_faction_of_party, ":castle_33_faction", "p_castle_33"),
     (store_faction_of_party, ":castle_53_faction", "p_castle_53"),
     (store_faction_of_party, ":castle_55_faction", "p_castle_55"),
+    (store_faction_of_party, ":castle_116_faction", "p_castle_116"),
     (store_faction_of_party, ":castle_60_faction", "p_castle_60"),
     (eq, ":town_23_faction", "fac_player_supporters_faction"), #towns
     (eq, ":town_25_faction", "fac_player_supporters_faction"),
@@ -1191,6 +1194,7 @@ triggers = [
     (eq, ":castle_53_faction", "fac_player_supporters_faction"),
     (eq, ":castle_55_faction", "fac_player_supporters_faction"),
     (eq, ":castle_60_faction", "fac_player_supporters_faction"),
+    (eq, ":castle_116_faction", "fac_player_supporters_faction"),
 ],[
     (dialog_box, "@You have conquered Hispania!", "@Roma invicta!"),
     (call_script, "script_end_quest", "qst_conquest_hispania"), #ends the quest
@@ -1203,6 +1207,7 @@ triggers = [
     (store_faction_of_party, ":town_17_faction", "p_town_17"),  #starts with towns first - player must own most of hispania
     (store_faction_of_party, ":town_34_faction", "p_town_34"), 
     (store_faction_of_party, ":town_35_faction", "p_town_35"), 
+    (store_faction_of_party, ":town_49_faction", "p_town_49"), 
     (store_faction_of_party, ":castle_8_faction", "p_castle_8"), #now collects castle factions
     (store_faction_of_party, ":castle_22_faction", "p_castle_22"),
     (store_faction_of_party, ":castle_39_faction", "p_castle_39"),
@@ -1212,6 +1217,7 @@ triggers = [
     (eq, ":town_17_faction", "fac_player_supporters_faction"), #towns
     (eq, ":town_34_faction", "fac_player_supporters_faction"),
     (eq, ":town_35_faction", "fac_player_supporters_faction"),
+    (eq, ":town_49_faction", "fac_player_supporters_faction"),
     (eq, ":castle_8_faction", "fac_player_supporters_faction"), #castles
     (eq, ":castle_22_faction", "fac_player_supporters_faction"),
     (eq, ":castle_39_faction", "fac_player_supporters_faction"),
@@ -1237,6 +1243,7 @@ triggers = [
     (store_faction_of_party, ":castle_58_faction", "p_castle_58"),
     (store_faction_of_party, ":castle_73_faction", "p_castle_73"),
     (store_faction_of_party, ":castle_74_faction", "p_castle_74"),
+    (store_faction_of_party, ":castle_119_faction", "p_castle_119"),
     (eq, ":town_2_faction", "fac_player_supporters_faction"), #towns
     (eq, ":town_18_faction", "fac_player_supporters_faction"),
     (eq, ":town_24_faction", "fac_player_supporters_faction"),
@@ -1247,6 +1254,7 @@ triggers = [
     (eq, ":castle_58_faction", "fac_player_supporters_faction"),
     (eq, ":castle_73_faction", "fac_player_supporters_faction"),
     (eq, ":castle_74_faction", "fac_player_supporters_faction"),
+    (eq, ":castle_119_faction", "fac_player_supporters_faction"),
 ],[
     (dialog_box, "@You have conquered Britannia, the island is now united under your banner!", "@Victory!"),
     (call_script, "script_end_quest", "qst_unite_britannia"), #ends the quest
@@ -1325,7 +1333,7 @@ triggers = [
     (eq, ":castle_56_faction", "fac_player_supporters_faction"),
     (eq, ":castle_66_faction", "fac_player_supporters_faction"),
 ],[
-    (dialog_box, "@You have conquered the Alemmani lands!", "@Victory!"),
+    (dialog_box, "@You have conquered the Alamanni lands!", "@Victory!"),
     (call_script, "script_end_quest", "qst_conquest_alemmani"), #ends the quest
     (call_script, "script_change_troop_renown", "trp_player", 150),
     (troop_add_gold, "trp_player", 10000),
@@ -1563,4 +1571,11 @@ triggers = [
 
 #+freelancer end
 
+    (0,0,ti_once,[],[
+    	(party_add_particle_system, "p_volcano1", "psys_torch_fire_sparks"),
+	(party_add_particle_system, "p_volcano1", "psys_map_village_looted_smoke"),
+
+    	(party_add_particle_system, "p_volcano2", "psys_torch_fire_sparks"),
+	(party_add_particle_system, "p_volcano2", "psys_map_village_looted_smoke"),
+    ]),
 ]

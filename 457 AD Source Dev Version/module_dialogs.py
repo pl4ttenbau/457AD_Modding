@@ -9375,10 +9375,10 @@ Still I am sorry that I'll leave you soon. You must promise me, you'll come visi
 (lt, ":recruiter_amount", ":max_recruiters"),
 ],
 #SB : puts to put, other grammatical fixes
-"If you want, I will send someone to visit nearby villages and enlist their population to our forces. \
-After he has recruited the amount you ordered he returns to this {reg0?town:castle} and put the recruits in the garrison. \
-There's a limit for concurrent recruiters, which is 2 for castles and 4 for towns. \
-What kind of recruits do you want?", "dplmc_constable_recruit_select",
+"If you want, I will send someone to visit nearby villages and enlist their population to our forces. "+
+"After he has recruited the amount you ordered he returns to this {reg0?town:castle} and put the recruits in the garrison. "+
+"There's a limit for concurrent recruiters, which is 2 for castles and 4 for towns. "+
+"What kind of recruits do you want?", "dplmc_constable_recruit_select",
 []],
 
 [anyone|plyr|repeat_for_factions, "dplmc_constable_recruit_select",
@@ -13866,6 +13866,8 @@ What kind of recruits do you want?", "dplmc_constable_recruit_select",
 [], "Who shall I send? You should choose one who has skills in persuasion!", "minister_emissary_select",
 []],
 
+
+
 ##dispatch emissary to persuade
 [anyone, "minister_emissary_dispatch",
 [
@@ -13882,9 +13884,86 @@ What kind of recruits do you want?", "dplmc_constable_recruit_select",
 ]],
 
 ##companion returning after persuasion request
+#madsci make it easier to recruit landless lords
+[anyone, "event_triggered", [
+    (store_conversation_troop, "$map_talk_troop"),
+    (eq, "$map_talk_troop", "$npc_to_rejoin_party"),
+	(assign, "$g_talk_troop", "$map_talk_troop"),
+    (troop_get_slot, ":mission", "$g_talk_troop", slot_troop_current_mission),
+    (eq, ":mission", dplmc_npc_mission_persuasion),
+    (troop_get_slot, ":string", "$map_talk_troop", slot_troop_honorific),
+    (str_store_string, s21, ":string"),
+    (troop_get_slot, ":mission_object", "$g_talk_troop", slot_troop_mission_object),
+    (str_store_faction_name, s31, ":mission_object"),
+    (troop_get_slot, ":target_troop", "$g_talk_troop", dplmc_slot_troop_mission_diplomacy),
+	(neg|troop_slot_eq, ":target_troop", slot_troop_occupation, dplmc_slto_dead),
+
+    (str_store_troop_name, s14, ":target_troop"),
+	(store_troop_faction, ":kingdom_hero_faction", ":target_troop"),
+        (neg|faction_slot_eq, ":kingdom_hero_faction", slot_faction_leader, ":target_troop"),
+	(neq, ":kingdom_hero_faction", "$players_kingdom"),
+
+	(assign, ":centers", 0),
+	(assign, ":lord_centers", 0),
+	(try_for_range, ":center_no", walled_centers_begin, walled_centers_end),
+		(store_faction_of_party, ":party_faction", ":center_no"),
+		(try_begin),
+		(eq, ":party_faction", "$players_kingdom"),
+		(val_add, ":centers", 1),
+		(else_try),
+		(party_slot_eq, ":center_no", slot_town_lord, ":target_troop"),
+		(val_add, ":lord_centers", 1),
+		(try_end),
+	(try_end),
+
+	(assign, ":lords", 0),
+	(try_for_range, ":lord", heroes_begin, heroes_end),
+        (troop_slot_eq, ":lord", slot_troop_occupation, slto_kingdom_hero),
+	(store_troop_faction, ":troop_faction", ":lord"),
+	(eq, ":troop_faction", "$players_kingdom"),
+	(val_add, ":lords", 1),
+	(try_end),
+
+	(gt, ":centers", ":lords"), #need a walled center for the lord
+	(eq, ":lord_centers", 0), #doesnt already have one
+
+	(troop_get_slot, ":lord_religion", ":lord", slot_troop_religion),
+	(troop_get_slot, ":player_religion", "trp_player", slot_troop_religion),
+	(store_skill_level, ":persuasion_skill", "skl_persuasion", "$g_talk_troop"),
+	(this_or_next|faction_slot_eq, ":troop_faction", slot_faction_state, sfs_defeated),
+	(this_or_next|eq, ":lord_religion", ":player_religion"),
+	(gt, ":persuasion_skill", 4),
+               ],
+"Well, {s21}, at last I've found you. I have returned from my persuasion mission to {s31}. {s14} agreed to join you.","companion_rejoin_response", [
+  (troop_get_slot, ":target_troop", "$g_talk_troop", dplmc_slot_troop_mission_diplomacy),
+  (call_script, "script_change_troop_faction", ":target_troop", "$players_kingdom"),
+
+  (store_faction_of_troop, ":target_faction", ":target_troop"),
+  (faction_get_slot, ":other_liege", ":target_faction", slot_faction_leader),
+  (try_begin),
+    (store_relation, ":relation", "$players_kingdom", ":target_faction"),
+    (ge, ":relation", 0),
+
+    (call_script, "script_add_log_entry", logent_border_incident_troop_suborns_lord, "trp_player", -1, ":target_troop",":target_faction"),
+    (store_add, ":slot_provocation_days", "$players_kingdom", slot_faction_provocation_days_with_factions_begin),
+    (val_sub, ":slot_provocation_days", kingdoms_begin),
+    (faction_set_slot, ":target_faction", ":slot_provocation_days", 30),
+
+    (faction_get_slot, ":other_liege", ":target_faction", slot_faction_leader),
+    (call_script, "script_troop_change_relation_with_troop", "trp_player", ":other_liege", -3),
+  (try_end),
+
+  #SB : add 2 relation between emissary
+  (call_script, "script_troop_change_relation_with_troop", "$g_talk_troop", ":target_troop", 2),
+  (call_script, "script_change_troop_renown", "$g_talk_troop", dplmc_companion_skill_renown), #total of 5 for success
+  (call_script, "script_change_player_right_to_rule", 2),
+]],
+
+##companion returning after persuasion request
 [anyone, "event_triggered", [
 (store_conversation_troop, "$map_talk_troop"),
 (eq, "$map_talk_troop", "$npc_to_rejoin_party"),
+(assign, "$g_talk_troop", "$map_talk_troop"),
 (troop_get_slot, ":mission", "$g_talk_troop", slot_troop_current_mission),
 (eq, ":mission", dplmc_npc_mission_persuasion),
 (troop_get_slot, ":string", "$map_talk_troop", slot_troop_honorific),
@@ -14074,7 +14153,7 @@ What kind of recruits do you want?", "dplmc_constable_recruit_select",
 	(gt, ":centers", 0), #madsci the lord should not be staying in a dead faction if he otherwise wants to change factions
   (assign, ":no_join", 1),
   #SB : king -> liege, added I "would"
-  (str_store_string, s40, "@{s40} I 'd rather stay with my current liege."),
+  (str_store_string, s40, "@{s40} I would rather stay with my current liege."),
 (try_end),
 
 (try_begin),
@@ -14186,6 +14265,7 @@ What kind of recruits do you want?", "dplmc_constable_recruit_select",
 [anyone, "event_triggered", [
     (store_conversation_troop, "$map_talk_troop"),
     (eq, "$map_talk_troop", "$npc_to_rejoin_party"),
+	(assign, "$g_talk_troop", "$map_talk_troop"),
     (troop_get_slot, ":mission", "$g_talk_troop", slot_troop_current_mission),
     (eq, ":mission", dplmc_npc_mission_persuasion),
     (troop_get_slot, ":string", "$map_talk_troop", slot_troop_honorific),
@@ -27135,12 +27215,14 @@ I will use this to make amends to those you have wronged, and I will let it be k
         (neq, "$players_kingdom", "$g_talk_troop_faction"),
         (eq, "$players_kingdom", 0),
     (neg|troop_slot_ge, "$g_talk_troop", slot_troop_prisoner_of_party, 0),
+	(assign, "$enlisted_faction", "$g_talk_troop_faction"), #madsci
      ],"My Lord, I would like to enlist in your army.", "lord_specialise",[]],
 
   [anyone|plyr,"lord_talk", [
     (eq, "$g_talk_troop", "$enlisted_lord"),
         (eq, "$freelancer_state", 1),
     (neg|troop_slot_ge, "$g_talk_troop", slot_troop_prisoner_of_party, 0),
+	(eq, 1, 0), #madsci disable this
      ],"My Lord, I would like to be reassigned to another division.", "lord_request_reassignment",[]],
 
   # dialog_advise_retirement
@@ -27179,13 +27261,16 @@ I will use this to make amends to those you have wronged, and I will let it be k
   #stolen from 1257 ad
   [anyone,"lord_specialise",
     [
-    ], "And you are?", "lord_specialise_choose", []],
+    ], "And you are?", "lord_specialise_choose", [
+(assign, "$enlisted_faction", "$g_talk_troop_faction"), #madsci
+]],
 
   [anyone|plyr,"lord_specialise_choose",
     [
 (faction_get_slot, ":troop", "$g_talk_troop_faction", slot_faction_tier_1_troop),
 (gt, ":troop", 0),
 (neg|troop_is_mounted, ":troop"),
+(call_script, "script_cf_freelancer_player_can_upgrade", ":troop"), #madsci check if can actually be this
     ], "A skirmisher!", "lord_request_enlistment", [(assign, "$temp", slot_faction_tier_1_troop)]],
 
   [anyone|plyr,"lord_specialise_choose",
@@ -27197,6 +27282,7 @@ I will use this to make amends to those you have wronged, and I will let it be k
 (gt, ":troop2", 0),
 (neq, ":troop", ":troop2"),
 (neg|troop_is_mounted, ":troop2"),
+(call_script, "script_cf_freelancer_player_can_upgrade", ":troop2"), #madsci check if can actually be this
     ], "A footman!", "lord_request_enlistment", [(assign, "$temp", slot_faction_tier_2_troop)]],
 
   [anyone|plyr,"lord_specialise_choose",
@@ -27209,10 +27295,25 @@ I will use this to make amends to those you have wronged, and I will let it be k
      #(neq, ":troop_faction", "fac_kingdom_20"),
      (troop_slot_ge, "trp_player", slot_troop_renown, 120),
 (faction_get_slot, ":troop", "$g_talk_troop_faction", slot_faction_tier_3_troop),
+(faction_get_slot, ":culture", "$g_talk_troop_faction", slot_faction_culture),
+	(try_begin),
+	(eq, ":culture", "fac_culture_empire"),
+	(assign, ":troop", "trp_eques_scutarii"),
+	(else_try),
+	(eq, ":culture", "fac_culture_11"),
+	(assign, ":troop", "trp_eques_romano_mauri"),
+	(else_try),
+	(eq, ":culture", "fac_culture_15"),
+	(assign, ":troop", "trp_nubian_horseman"),
+	(else_try),
+	(eq, ":culture", "fac_culture_20"),
+	(assign, ":troop", "trp_slav_horseman"),
+	(try_end),
 (gt, ":troop", 0),
 (troop_is_mounted, ":troop"), #madsci make sure this is actually a horseman
-(store_skill_level, ":skill", skl_riding, "trp_player"),
-(ge, ":skill", 1),
+(call_script, "script_cf_freelancer_player_can_upgrade", ":troop"), #madsci check if can actually be this
+#(store_skill_level, ":skill", skl_riding, "trp_player"),
+#(ge, ":skill", 1),
     ], "A horseman!", "lord_request_enlistment", [(assign, "$temp", slot_faction_tier_3_troop)]],
 
   [anyone|plyr,"lord_specialise_choose",
@@ -27222,6 +27323,7 @@ I will use this to make amends to those you have wronged, and I will let it be k
     [anyone,"lord_request_enlistment",
     [
         (ge, "$g_talk_troop_relation", 0),
+	(assign, "$enlisted_faction", "$g_talk_troop_faction"), #madsci
     ### tom - crusader order join
     (call_script, "script_freelancer_get_troop", "$g_talk_troop", "$g_talk_troop_faction", "$temp"),
     (str_store_troop_name, s1, reg1),
@@ -27259,7 +27361,8 @@ I will use this to make amends to those you have wronged, and I will let it be k
     "A new role in the infantry: {s1}", "lord_request_reassignment_confirm", [(assign, "$temp", reg1)]],
   [anyone|plyr,"lord_request_reassignment_select", [(call_script, "script_cf_freelancer_get_reassign_troop", "trp_temp_array_a", grc_archers),(assign, reg2, reg0),(str_store_troop_name, s2, reg0)],
    "A position with your ranged troops: {s2}", "lord_request_reassignment_confirm", [(assign, "$temp", reg2)]],
-  [anyone|plyr,"lord_request_reassignment_select", [(call_script, "script_cf_freelancer_get_reassign_troop", "trp_temp_array_a", grc_cavalry),(assign, reg3, reg0),(str_store_troop_name, s3, reg0)],
+  [anyone|plyr,"lord_request_reassignment_select", [(call_script, "script_cf_freelancer_get_reassign_troop", "trp_temp_array_a", grc_cavalry),(assign, reg3, reg0),(str_store_troop_name, s3, reg0),(store_skill_level, ":skill", skl_riding, "trp_player"),
+(ge, ":skill", 1),],
     "A spot amongst your horsemen: {s3}", "lord_request_reassignment_confirm", [(assign, "$temp", reg3)]],
     [anyone|plyr,"lord_request_reassignment_select", [], "I'd like to start with the recruits again.", "lord_request_reassignment_confirm", [(faction_get_slot, "$temp", "$g_talk_troop_faction", slot_faction_tier_1_troop)]],
   [anyone|plyr,"lord_request_reassignment_select", [(str_store_troop_name, s5, "$player_cur_troop")], "Actually...maybe not, milord. No. I'm fine as a {s5}", "lord_pretalk", []],
@@ -27671,12 +27774,14 @@ I will use this to make amends to those you have wronged, and I will let it be k
 ],
 "Very well -- to the walls!", "close_window",
 [
- (party_get_slot, ":ai_object", "$g_talk_troop_party", slot_party_ai_object),
-(party_set_slot, "$g_talk_troop_party", slot_party_ai_substate, 0), #madsci bugfix
-(call_script, "script_begin_assault_on_center", ":ai_object"),
-
-(party_set_slot, "$g_talk_troop_party", slot_party_under_player_suggestion, spai_besieging_center),
- (assign, "$g_leave_encounter", 1),
+	(party_get_slot, ":ai_object", "$g_talk_troop_party", slot_party_ai_object),
+	(party_set_slot, "$g_talk_troop_party", slot_party_ai_substate, 0), #madsci bugfix
+	(call_script, "script_begin_assault_on_center", ":ai_object"),
+	(str_store_party_name_link, s1, "$g_talk_troop_party"),
+        (str_store_party_name_link, s2, ":ai_object"),
+        (display_message, "@{s1} assaults {s2}."),
+	(party_set_slot, "$g_talk_troop_party", slot_party_under_player_suggestion, spai_besieging_center),
+ 	(assign, "$g_leave_encounter", 1),
 
   ]],
 
@@ -27687,7 +27792,7 @@ I will use this to make amends to those you have wronged, and I will let it be k
    [anyone|plyr,"lord_give_order", [
  (neg|faction_slot_eq, "$players_kingdom", slot_faction_marshall, "trp_player"), #not an order,  only a suggestion
 ],
-"There is a fortress which can easily be taken. Go to..", "lord_give_order_details_ask",
+"There is a fortress which can easily be taken. Go to...", "lord_give_order_details_ask",
 [
   (assign, "$temp", spai_besieging_center),
   ]],
@@ -32596,9 +32701,9 @@ Hand over my {reg19} siliquae, if you please, and end our business together.", "
   [anyone,"lord_tell_mission", [(eq, "$g_talk_troop", "trp_kingdom_4_lord"),
   (eq, "$g_battle_of_bolia", 0),
   (neg|check_quest_active, "qst_battle_of_bolia"),
-  ], "Yes, I have task of great importance, {playername}. A coalition of Suebi, Rugii, Iazgyes, Heruli and Gepids has formed to oppose my rule.\
- The kings of the Heruli and Suebi, Visalius and Hunimund have gathered their forces and are ready to march into my kingdom.\
- As an ally of the Amali dynasty, I wish for you to help join me in this great battle, and help me crush the coalition...", "lord_tell_mission_hunimund",
+  ], "Yes, I have task of great importance, {playername}. A coalition of Suebi, Rugii, Iazgyes, Heruli and Gepids has formed to oppose my rule. "+
+ "The kings of the Heruli and Suebi, Visalius and Hunimund have gathered their forces and are ready to march into my kingdom. "+
+ "As an ally of the Amali dynasty, I wish for you to help join me in this great battle, and help me crush the coalition...", "lord_tell_mission_hunimund",
    [
    ]],
    [anyone|plyr,"lord_tell_mission_hunimund", [
@@ -44039,7 +44144,9 @@ Hand over my {reg19} siliquae, if you please, and end our business together.", "
   (quest_set_slot,"qst_agrippinus_quest",slot_quest_current_state,6),
   ]],
   [anyone|plyr,"mayor_agrippinus_talk_2",[
-  ], "Thank you for the information^^(Hint: Report back to Iacobus.)", "close_window",[]],
+  ], "Thank you for the information^^(Hint: Report back to Iacobus.)", "close_window",[
+(add_quest_note_from_sreg, "qst_agrippinus_quest", 10, "@Return to Iacobus when you are ready to decide whether or not Agrippinus is guilty or innocent.",0), #madsci add note
+]],
 
 ## SB : add conditional lordship/rulership and flavour text for guildmaster
   [anyone|plyr,"mayor_talk", [], "Goodbye.", "close_window",[]],
@@ -44451,6 +44558,7 @@ Hand over my {reg19} siliquae, if you please, and end our business together.", "
    (quest_get_slot, ":bandit_lair", "qst_destroy_bandit_lair", slot_quest_target_party),
    (party_get_template_id, ":bandit_type", ":bandit_lair"),
    (this_or_next|eq, ":bandit_type", "pt_mountain_bandit_lair"),
+   (this_or_next|eq, ":bandit_type", "pt_persian_bandit_lair"),
    (eq, ":bandit_type", "pt_armenian_bandit_lair"),
    ],
   "{s4} such as these will usually establish a base in the highlands, often on an steep ledge where they have a view of the surrounding countryside. This makes them difficult to surprise. The best way to discover its location would be to find a group of {s4} who appear to be heading back to their base to resupply, and follow them.", "merchant_quest_track_bandit_lair_choice",
@@ -44481,6 +44589,7 @@ Hand over my {reg19} siliquae, if you please, and end our business together.", "
    (party_get_template_id, ":bandit_type", ":bandit_lair"),
    (this_or_next|eq, ":bandit_type", "pt_slavic_bandit_lair"),
    (this_or_next|eq, ":bandit_type", "pt_baltic_bandit_lair"),
+   (this_or_next|eq, ":bandit_type", "pt_roman_bandit_lair"),
    (eq, ":bandit_type", "pt_taiga_bandit_lair"),
    ],
   "{s4} such as these will usually set up their encampments deep in the woods. The best way to discover its location would be to find a group of {s4} who appear to be heading back to their base to resupply, and follow them.", "merchant_quest_track_bandit_lair_choice",
@@ -47365,6 +47474,10 @@ Hand over my {reg19} siliquae, if you please, and end our business together.", "
   [party_tpl|pt_gallaecian_rebels|auto_proceed,"start", [(eq,"$talk_context",tc_party_encounter),(encountered_party_is_attacker)],
    "{!}Warning: This line should never display.", "bandit_introduce",[]],
   [party_tpl|pt_foederati_rebels|auto_proceed,"start", [(eq,"$talk_context",tc_party_encounter),(encountered_party_is_attacker)],
+   "{!}Warning: This line should never display.", "bandit_introduce",[]],
+  [party_tpl|pt_persian_bandits|auto_proceed,"start", [(eq,"$talk_context",tc_party_encounter),(encountered_party_is_attacker)],
+   "{!}Warning: This line should never display.", "bandit_introduce",[]],
+  [party_tpl|pt_roman_bandits|auto_proceed,"start", [(eq,"$talk_context",tc_party_encounter),(encountered_party_is_attacker)],
    "{!}Warning: This line should never display.", "bandit_introduce",[]],
 
     [party_tpl|pt_minor_faction_levies,"start", [],
@@ -52172,7 +52285,7 @@ Hand over my {reg19} siliquae, if you please, and end our business together.", "
   [trp_curiosi_james|plyr, "curiosi_james_intro_1", [],
    "I am {playername}, I was ordered by Majorian to meet with you in regards to investigating the allegations against Agrippinus.", "curiosi_james_intro_2", []],
   [trp_curiosi_james, "curiosi_james_intro_2", [],
-   "Ah, {playername}, I was told you would be coming. My name is Iacobus, . Curiosi of the Agentes in Rebus. I have learned so far that Agrippinus has many ties here in Gallia Lugdunensis, however, I may have aroused suspicion around myself. It would be best if you, instead investigated any local rumors about the man.", "curiosi_james_intro_3", []],
+   "Ah, {playername}, I was told you would be coming. My name is Iacobus. "+"Curiosi of the Agentes in Rebus. I have learned so far that Agrippinus has many ties here in Gallia Lugdunensis, however, I may have aroused suspicion around myself. It would be best if you, instead investigated any local rumors about the man.", "curiosi_james_intro_3", []],
   [trp_curiosi_james, "curiosi_james_intro_3", [],
    "It would be best to talk to the locals in Lutetia if they have heard anything interesting about Agrippinus. They may gives us some clues to work with. While you investigate there, I will find out what I can on my own.", "curiosi_james_intro_4", []],
   [trp_curiosi_james|plyr, "curiosi_james_intro_4", [],
