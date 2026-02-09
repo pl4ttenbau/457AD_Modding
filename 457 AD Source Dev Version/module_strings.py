@@ -6790,7 +6790,6 @@ Even in the last case, the player can make formations up to four lines by orderi
 ("face_culture_jewish_female", "000000003d08100324cc75c6f22f3bab000000000015a7340000000000000000"),
 ("face_culture_irish_female", "000000003204300b676b8e5a4cadbadc000000000011cb530000000000000000"),
 ("face_culture_slavic_female", "00000000340c0005449a6b372d791d2300000000000db8920000000000000000"),
-("face_culture_finnic_female", "000000003204300b676b8e5a4cadbadc000000000011cb530000000000000000"),
 ("face_culture_finnic_female", "00000000230c300b5b5669bb1472392400000000000d42cb0000000000000000"),
 
 ("culture_gothic","You_are_a_Goth._Your_people_are_scions_of_Berig,_the_warrior-king_who_led_your_forefathers_from_their_ancestral_homes_in_Scandza._They_travelled_far,_through_the_dark_forests_and_swamps_of_eastern_Europa,_across_mountains_and_wide_rivers,_in_search_of_new_lands_to_settle._When_the_Huns_came,_some_fled_while_others_fought._Now,_to_east_and_west,_they_carve_out_kingdoms_by_their_strength_and_courage."),
