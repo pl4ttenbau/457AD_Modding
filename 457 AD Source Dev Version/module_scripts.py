@@ -491,12 +491,6 @@ scripts = [
     (faction_set_slot, "fac_culture_minor_5",  slot_faction_tier_4_troop, "trp_aestii_tribesman"),
     (faction_set_slot, "fac_culture_minor_5",  slot_faction_tier_5_troop, "trp_aestii_companion"),
 
-    (faction_set_slot, "fac_culture_minor_6",  slot_faction_tier_1_troop, "trp_mordvin_skirmisher"),
-    (faction_set_slot, "fac_culture_minor_6",  slot_faction_tier_2_troop, "trp_mordvin_skirmisher"),
-    (faction_set_slot, "fac_culture_minor_6",  slot_faction_tier_3_troop, "trp_mordvin_mounted_skirmisher"),
-    (faction_set_slot, "fac_culture_minor_6",  slot_faction_tier_4_troop, "trp_mordvin_footman"),
-    (faction_set_slot, "fac_culture_minor_6",  slot_faction_tier_5_troop, "trp_mordvin_companion"),
-
     (faction_set_slot, "fac_culture_minor_7",  slot_faction_tier_1_troop, "trp_scandinavian_freeman"),
     (faction_set_slot, "fac_culture_minor_7",  slot_faction_tier_2_troop, "trp_scandinavian_freeman"),
     (faction_set_slot, "fac_culture_minor_7",  slot_faction_tier_3_troop, "trp_scandinavian_retainer"),
@@ -854,7 +848,7 @@ scripts = [
     (faction_set_slot, "fac_kingdom_32",  slot_faction_culture, "fac_culture_19"),
     (faction_set_slot, "fac_kingdom_32",  slot_faction_leader, "trp_irish_king"),
     (troop_set_slot, "trp_irish_king", slot_troop_renown, 1600),
-        (troop_set_slot, "trp_irish_king", slot_troop_religion, slot_religion_christian_chalcedonian),
+    (troop_set_slot, "trp_irish_king", slot_troop_religion, slot_religion_christian_chalcedonian),
 
     (faction_set_slot, "fac_kingdom_33",  slot_faction_culture, "fac_culture_20"),
     (faction_set_slot, "fac_kingdom_33",  slot_faction_leader, "trp_kingdom_33_lord"),
@@ -864,7 +858,8 @@ scripts = [
     (faction_set_slot, "fac_kingdom_34",  slot_faction_leader, "trp_kingdom_34_lord"),
     (troop_set_slot, "trp_kingdom_34_lord", slot_troop_renown, 1600),
 
-    (faction_set_slot, "fac_kingdom_35",  slot_faction_culture, "fac_culture_minor_6"),
+
+    (faction_set_slot, "fac_kingdom_35",  slot_faction_culture, "fac_culture_21"),
     (faction_set_slot, "fac_kingdom_35",  slot_faction_leader, "trp_kingdom_35_lord"),
     (troop_set_slot, "trp_kingdom_35_lord", slot_troop_renown, 1600),
 
@@ -2904,6 +2899,7 @@ scripts = [
     (party_set_slot, "p_castle_107", slot_center_culture,  "fac_culture_20"), # Droguva
 
     (party_set_slot, "p_town_48", slot_center_culture,  "fac_culture_21"), # Mustajoki
+    (party_set_slot, "p_castle_115", slot_center_culture,  "fac_culture_2"), # Potmo
     (party_set_slot, "p_castle_115", slot_center_culture,  "fac_culture_minor_6"), # Potmo
     (party_set_slot, "p_village_294", slot_center_culture,  "fac_culture_2"), # Naraj
 
@@ -11401,6 +11397,7 @@ scripts = [
   (troop_set_slot, "trp_kingdom_34_lady_2", slot_troop_father, "trp_knight_34_1"),
 
   (troop_set_slot, "trp_kingdom_35_lady_1", slot_troop_father, "trp_knight_35_1"),
+
   (troop_set_slot, "trp_kingdom_35_lady_1", slot_troop_mother, "trp_kingdom_35_lady_2"),
   (troop_set_slot, "trp_kingdom_35_lady_1", slot_troop_spouse, "trp_kingdom_35_lord"),
   (troop_set_slot, "trp_kingdom_35_lord", slot_troop_spouse, "trp_kingdom_35_lady_1"),
@@ -12071,7 +12068,6 @@ scripts = [
 
     (else_try),
         (faction_slot_eq, ":faction_no", slot_faction_culture, "fac_culture_20"), #slavs - uses eastern germans as deserters, messengers + guards
-
         (faction_set_slot, ":faction_no",  slot_faction_deserter_troop, "trp_slavic_deserter"),
         (faction_set_slot, ":faction_no",  slot_faction_guard_troop, "trp_slav_horseman"),
         (faction_set_slot, ":faction_no",  slot_faction_messenger_troop, "trp_slavic_messenger"),
@@ -12101,16 +12097,16 @@ scripts = [
         (faction_set_slot, ":faction_no",  slot_faction_reinforcements_a, "pt_culture_minor_1_reinforcements_a"),
         (faction_set_slot, ":faction_no",  slot_faction_reinforcements_b, "pt_culture_minor_1_reinforcements_b"),
         (faction_set_slot, ":faction_no",  slot_faction_reinforcements_c, "pt_culture_minor_1_reinforcements_c"),
-      #(else_try),
-        #(faction_slot_eq, ":faction_no", slot_faction_culture, "fac_culture_minor_2"), # phinnoi
-        #(faction_set_slot, ":faction_no",  slot_faction_deserter_troop, "trp_northern_germanic_deserter"),
-        #(faction_set_slot, ":faction_no",  slot_faction_guard_troop, "trp_phinnoi_retainer"),
-        #(faction_set_slot, ":faction_no",  slot_faction_messenger_troop, "trp_northern_germanic_messenger"),
-        #(faction_set_slot, ":faction_no",  slot_faction_prison_guard_troop, "trp_northern_germanic_prison_guard"),
-        #(faction_set_slot, ":faction_no",  slot_faction_castle_guard_troop, "trp_phinnoi_retainer"),
-        #(faction_set_slot, ":faction_no",  slot_faction_reinforcements_a, "pt_culture_minor_2_reinforcements_a"),
-        #(faction_set_slot, ":faction_no",  slot_faction_reinforcements_b, "pt_culture_minor_2_reinforcements_b"),
-        #(faction_set_slot, ":faction_no",  slot_faction_reinforcements_c, "pt_culture_minor_2_reinforcements_c"),
+      (else_try),
+        (faction_slot_eq, ":faction_no", slot_faction_culture, "fac_culture_minor_2"), # finnoi
+        (faction_set_slot, ":faction_no",  slot_faction_deserter_troop, "trp_northern_germanic_deserter"),
+        (faction_set_slot, ":faction_no",  slot_faction_guard_troop, "trp_phinnoi_retainer"),
+        (faction_set_slot, ":faction_no",  slot_faction_messenger_troop, "trp_northern_germanic_messenger"),
+        (faction_set_slot, ":faction_no",  slot_faction_prison_guard_troop, "trp_northern_germanic_prison_guard"),
+        (faction_set_slot, ":faction_no",  slot_faction_castle_guard_troop, "trp_phinnoi_retainer"),
+        (faction_set_slot, ":faction_no",  slot_faction_reinforcements_a, "pt_culture_minor_2_reinforcements_a"),
+        (faction_set_slot, ":faction_no",  slot_faction_reinforcements_b, "pt_culture_minor_2_reinforcements_b"),
+        (faction_set_slot, ":faction_no",  slot_faction_reinforcements_c, "pt_culture_minor_2_reinforcements_c"),
       (else_try),
         (faction_slot_eq, ":faction_no", slot_faction_culture, "fac_culture_minor_3"), # copts - uses roman troops for deserters, messengers + guards
         (faction_set_slot, ":faction_no",  slot_faction_deserter_troop, "trp_roman_deserter"),
@@ -30911,6 +30907,11 @@ scripts = [
         	(assign, ":party_template_a", "pt_culture_minor_6_reinforcements_a"),
         	(assign, ":party_template_b", "pt_culture_minor_6_reinforcements_b"),
         	(assign, ":party_template_c", "pt_culture_minor_6_reinforcements_c"),
+		(else_try),
+		(eq, ":party_no", "p_castle_104"), #jaervi
+        	(assign, ":party_template_a", "pt_culture_21_reinforcements_a"),
+        	(assign, ":party_template_b", "pt_culture_21_reinforcements_b"),
+        	(assign, ":party_template_c", "pt_culture_21_reinforcements_c"),
 		(else_try),
 		(eq, ":party_no", "p_castle_112"), #jabiya
         	(assign, ":party_template_a", "pt_knight_6_6_reinforcements_a"),
